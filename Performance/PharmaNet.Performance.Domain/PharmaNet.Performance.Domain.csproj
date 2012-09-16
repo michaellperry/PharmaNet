@@ -43,7 +43,6 @@
     <Compile Include="Award.cs" />
     <Compile Include="MeasurementPeriod.cs" />
     <Compile Include="Member.cs" />
-    <Compile Include="ProductGroup.cs" />
     <Compile Include="Rebate.cs" />
     <Compile Include="ReportCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
