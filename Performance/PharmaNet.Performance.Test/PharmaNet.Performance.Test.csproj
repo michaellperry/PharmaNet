@@ -46,7 +46,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnitTest1.cs" />
+    <Compile Include="PerformanceCalculatorTest.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PharmaNet.Performance.Application\PharmaNet.Performance.Application.csproj">
+      <Project>{02362C4E-68B8-4B4D-9534-CC9FB76E2B6B}</Project>
+      <Name>PharmaNet.Performance.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PharmaNet.Performance.Domain\PharmaNet.Performance.Domain.csproj">
+      <Project>{C7E4CE9E-43CC-4E6D-9D84-FC32EFC038F6}</Project>
+      <Name>PharmaNet.Performance.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PharmaNet.Performance.Presentation\PharmaNet.Performance.Presentation.csproj">
+      <Project>{B4C9C6FB-4484-44C2-AC35-CE19F8407E11}</Project>
+      <Name>PharmaNet.Performance.Presentation</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

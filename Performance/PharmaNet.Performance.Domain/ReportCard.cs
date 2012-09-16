@@ -7,7 +7,7 @@ namespace PharmaNet.Performance.Domain
 {
     public class ReportCard
     {
-        private Participant _participant;
+        private Member _member;
         private Rebate _rebate;
         private MeasurementPeriod _measurementPeriod;
 

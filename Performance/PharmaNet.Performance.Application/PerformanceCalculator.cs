@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PharmaNet.Performance.Domain
+namespace PharmaNet.Performance.Application
 {
-    public class Rebate
+    public class PerformanceCalculator
     {
-        private string _name;
     }
 }

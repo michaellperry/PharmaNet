@@ -220,6 +220,16 @@
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PharmaNet.Performance.Application\PharmaNet.Performance.Application.csproj">
+      <Project>{02362C4E-68B8-4B4D-9534-CC9FB76E2B6B}</Project>
+      <Name>PharmaNet.Performance.Application</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PharmaNet.Performance.Domain\PharmaNet.Performance.Domain.csproj">
+      <Project>{C7E4CE9E-43CC-4E6D-9D84-FC32EFC038F6}</Project>
+      <Name>PharmaNet.Performance.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

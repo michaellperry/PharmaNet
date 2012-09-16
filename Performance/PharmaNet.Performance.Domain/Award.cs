@@ -7,5 +7,6 @@ namespace PharmaNet.Performance.Domain
 {
     public class Award
     {
+        private decimal _percentRemittance;
     }
 }

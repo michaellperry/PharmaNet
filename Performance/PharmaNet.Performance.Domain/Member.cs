@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PharmaNet.Performance.Domain
 {
-    public class Participant
+    public class Member
     {
         private string _accountNumber;
         private string _name;
