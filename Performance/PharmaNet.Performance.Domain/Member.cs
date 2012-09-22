@@ -7,7 +7,7 @@ namespace PharmaNet.Performance.Domain
 {
     public class Member
     {
-        private string _accountNumber;
-        private string _name;
+        public string AccountNumber { get; set; }
+        public string Name { get; set; }
     }
 }

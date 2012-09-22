@@ -1,12 +1,11 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace PharmaNet.Performance.Domain
 {
-    public class Award
+    public class SalesHistory
     {
-        public decimal PercentRemittance { get; set; }
     }
 }

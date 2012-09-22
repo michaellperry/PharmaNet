@@ -1,12 +1,13 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PharmaNet.Performance.Domain
+namespace PharmaNet.Rebates.Domain
 {
-    public class Award
+    public class Tier
     {
+        public decimal Threshold { get; set; }
         public decimal PercentRemittance { get; set; }
     }
 }

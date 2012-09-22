@@ -40,7 +40,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DrugClass.cs" />
+    <Compile Include="Method.cs" />
+    <Compile Include="Product.cs" />
+    <Compile Include="ProductGroup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Rebate.cs" />
+    <Compile Include="Tier.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model.cd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

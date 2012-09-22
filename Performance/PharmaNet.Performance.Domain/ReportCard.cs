@@ -7,12 +7,11 @@ namespace PharmaNet.Performance.Domain
 {
     public class ReportCard
     {
-        private Member _member;
-        private Rebate _rebate;
-        private MeasurementPeriod _measurementPeriod;
-
-        private decimal _totalSalesUnits;
-        private Award _award;
-        private decimal _unitsToNextLevel;
+        public Member Member { get; set; }
+        public Rebate Rebate { get; set; }
+        public MeasurementPeriod MeasurementPeriod { get; set; }
+        public decimal TotalSalesUnits { get; set; }
+        public Award Award { get; set; }
+        public decimal UnitsToNextLevel { get; set; }
     }
 }

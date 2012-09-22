@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace PharmaNet.Performance.Domain
+namespace PharmaNet.Rebates.Domain
 {
-    public class Rebate
+    public class DrugClass
     {
         public string Name { get; set; }
-        public Method Method { get; set; }
+        public List<ProductGroup> ProductGroups { get; set; }
     }
 }

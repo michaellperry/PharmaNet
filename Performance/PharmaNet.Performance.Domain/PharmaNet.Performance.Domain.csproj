@@ -41,11 +41,15 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Award.cs" />
+    <Compile Include="GrowthOverPriorPeriod.cs" />
+    <Compile Include="MarketShare.cs" />
     <Compile Include="MeasurementPeriod.cs" />
     <Compile Include="Member.cs" />
+    <Compile Include="Method.cs" />
     <Compile Include="Rebate.cs" />
     <Compile Include="ReportCard.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SalesHistory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Model.cd" />
