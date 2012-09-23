@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
   <Class Name="PharmaNet.Rebates.Domain.DrugClass">
-    <Position X="10.25" Y="0.75" Width="1.5" />
+    <Position X="13" Y="0.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAgAAAAAAAAAAAAA=</HashCode>
       <FileName>DrugClass.cs</FileName>
@@ -11,14 +11,14 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PharmaNet.Rebates.Domain.Product">
-    <Position X="10.25" Y="4.25" Width="1.5" />
+    <Position X="13" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAABAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PharmaNet.Rebates.Domain.ProductGroup">
-    <Position X="10.25" Y="2.5" Width="1.5" />
+    <Position X="13" Y="2.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAQ=</HashCode>
       <FileName>ProductGroup.cs</FileName>
@@ -30,11 +30,11 @@
   <Class Name="PharmaNet.Rebates.Domain.Rebate">
     <Position X="6.75" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAQAAAAAAAAgAAQAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgAEQAAAAAAAAABAAAAAAAAAA=</HashCode>
       <FileName>Rebate.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="ProductGroup" />
+      <Property Name="MeasuredProductGroup" />
     </ShowAsAssociation>
     <ShowAsCollectionAssociation>
       <Property Name="Tiers" />
@@ -45,6 +45,36 @@
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAA=</HashCode>
       <FileName>Tier.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PharmaNet.Rebates.Domain.MeasuredProductGroup">
+    <Position X="10.25" Y="2.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>MeasuredProductGroup.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MeasuredDrugClass" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Products" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="PharmaNet.Rebates.Domain.MeasuredDrugClass">
+    <Position X="10.25" Y="0.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAEQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MeasuredDrugClass.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="MeasuredProductGroups" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="PharmaNet.Rebates.Domain.MeasuredProduct">
+    <Position X="10.25" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MeasuredProduct.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

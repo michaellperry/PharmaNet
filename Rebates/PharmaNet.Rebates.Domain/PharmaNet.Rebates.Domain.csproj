@@ -41,6 +41,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DrugClass.cs" />
+    <Compile Include="MeasuredDrugClass.cs" />
+    <Compile Include="MeasuredProduct.cs" />
+    <Compile Include="MeasuredProductGroup.cs" />
     <Compile Include="Method.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="ProductGroup.cs" />

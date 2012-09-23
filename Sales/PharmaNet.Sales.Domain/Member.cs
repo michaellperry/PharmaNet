@@ -5,7 +5,7 @@ using System.Text;
 
 namespace PharmaNet.Sales.Domain
 {
-    public class Participant
+    public class Member
     {
         public string Name { get; set; }
     }
