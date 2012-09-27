@@ -1,0 +1,48 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Domain", "PharmaNet.Fulfillment.Domain\PharmaNet.Fulfillment.Domain.csproj", "{7E112EA0-15B1-426B-8BBC-FADF5234278B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Application", "PharmaNet.Fulfillment.Application\PharmaNet.Fulfillment.Application.csproj", "{FEB932F4-3E7D-49C3-A434-E96515DC4236}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Presentation", "PharmaNet.Fulfillment.Presentation\PharmaNet.Fulfillment.Presentation.csproj", "{22136F3C-A65A-4DAD-8738-942742276CCB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Test", "PharmaNet.Fulfillment.Test\PharmaNet.Fulfillment.Test.csproj", "{DD2DAC28-4F46-4937-8088-4D92AA245BF4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F72EBEE2-A392-4E3B-8A09-1E0E02A3CE7C}"
+	ProjectSection(SolutionItems) = preProject
+		Fulfillment.vsmdi = Fulfillment.vsmdi
+		Local.testsettings = Local.testsettings
+		TraceAndTestImpact.testsettings = TraceAndTestImpact.testsettings
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = Fulfillment.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7E112EA0-15B1-426B-8BBC-FADF5234278B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7E112EA0-15B1-426B-8BBC-FADF5234278B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7E112EA0-15B1-426B-8BBC-FADF5234278B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7E112EA0-15B1-426B-8BBC-FADF5234278B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEB932F4-3E7D-49C3-A434-E96515DC4236}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEB932F4-3E7D-49C3-A434-E96515DC4236}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEB932F4-3E7D-49C3-A434-E96515DC4236}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEB932F4-3E7D-49C3-A434-E96515DC4236}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22136F3C-A65A-4DAD-8738-942742276CCB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22136F3C-A65A-4DAD-8738-942742276CCB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22136F3C-A65A-4DAD-8738-942742276CCB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22136F3C-A65A-4DAD-8738-942742276CCB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DD2DAC28-4F46-4937-8088-4D92AA245BF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DD2DAC28-4F46-4937-8088-4D92AA245BF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DD2DAC28-4F46-4937-8088-4D92AA245BF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DD2DAC28-4F46-4937-8088-4D92AA245BF4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
