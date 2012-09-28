@@ -13,17 +13,17 @@ namespace PharmaNet.Fulfillment.Test
     public class InventoryAllcationServiceTest
     {
         private InventoryAllocationService _service;
-        private FakeRepository<Product> _products;
+        private FakeRepository<Warehouse> _warehouses;
 
         [TestInitialize]
         public void Initialize()
         {
-            _products = new FakeRepository<Product>();
-            _products.Add(new Product
-            {
-                ProductId = 11190
-            });
-            _service = new InventoryAllocationService(_products);
+            _warehouses = new FakeRepository<Warehouse>();
+            var warehouse1 = new Warehouse();
+            warehouse1.SetInventoryOnHand(new Product { ProductId = 11190 }, 7);
+            _warehouses.Add(warehouse1);
+
+            _service = new InventoryAllocationService(_warehouses);
         }
 
         [TestMethod]

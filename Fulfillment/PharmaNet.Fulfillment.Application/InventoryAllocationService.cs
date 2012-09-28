@@ -9,16 +9,54 @@ namespace PharmaNet.Fulfillment.Application
 {
     public class InventoryAllocationService
     {
-        private IRepository<Product> _productRepository;
+        private IRepository<Warehouse> _warehouseRepository;
 
-        public InventoryAllocationService(IRepository<Product> productRepository)
+        public InventoryAllocationService(IRepository<Warehouse> warehouseRepository)
         {
-            _productRepository = productRepository;
+            _warehouseRepository = warehouseRepository;
         }
 
         public List<PickList> AllocateInventory(List<OrderLine> orderLines)
         {
-            return new List<PickList>();
+            List<PickList> pickLists = new List<PickList>();
+            foreach (var orderLine in orderLines)
+            {
+                Warehouse warehouse = LocateProduct(
+                    orderLine.Product,
+                    orderLine.Quantity);
+
+                if (warehouse != null)
+                {
+                    PickList picklist = PickProduct(
+                        orderLine.Product, 
+                        orderLine.Quantity, 
+                        warehouse);
+                    pickLists.Add(picklist);
+                }
+            }
+            return pickLists;
+        }
+
+        private Warehouse LocateProduct(
+            Product product,
+            int quantity)
+        {
+            return _warehouseRepository.GetAll()
+                .Where(warehouse => warehouse.GetInventoryOnHand(product) >= quantity)
+                .FirstOrDefault();
+        }
+
+        private PickList PickProduct(
+            Product product, 
+            int quantity, 
+            Warehouse warehouse)
+        {
+            return new PickList
+            {
+                Product = product,
+                Quantity = quantity,
+                Warehouse = warehouse
+            };
         }
     }
 }
