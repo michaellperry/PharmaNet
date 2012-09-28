@@ -47,10 +47,12 @@ namespace PharmaNet.Fulfillment.Application
         }
 
         private PickList PickProduct(
-            Product product, 
-            int quantity, 
+            Product product,
+            int quantity,
             Warehouse warehouse)
         {
+            int inventoryOnHand = warehouse.GetInventoryOnHand(product);
+            warehouse.SetInventoryOnHand(product, inventoryOnHand - quantity);
             return new PickList
             {
                 Product = product,

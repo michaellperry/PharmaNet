@@ -15,13 +15,23 @@ namespace PharmaNet.Fulfillment.Test
         private InventoryAllocationService _service;
         private FakeRepository<Warehouse> _warehouses;
 
+        private Warehouse _warehouse1;
+        private Product _procrit;
+        private Customer _clinic;
         [TestInitialize]
         public void Initialize()
         {
             _warehouses = new FakeRepository<Warehouse>();
-            var warehouse1 = new Warehouse();
-            warehouse1.SetInventoryOnHand(new Product { ProductId = 11190 }, 7);
-            _warehouses.Add(warehouse1);
+            _warehouse1 = new Warehouse();
+            _procrit = new Product { ProductId = 11190 };
+            _warehouse1.SetInventoryOnHand(_procrit, 7);
+            _warehouses.Add(_warehouse1);
+
+            _clinic = new Customer
+            {
+                Name = "The Clinic",
+                ShippingAddress = "1 My Way"
+            };
 
             _service = new InventoryAllocationService(_warehouses);
         }
@@ -29,18 +39,12 @@ namespace PharmaNet.Fulfillment.Test
         [TestMethod]
         public void CanAllocateFromOneWarehouse()
         {
-            Product procrit = new Product { ProductId = 11190 };
-            Customer clinic = new Customer
-            {
-                Name = "The Clinic",
-                ShippingAddress = "1 My Way"
-            };
             List<PickList> pickLists = _service.AllocateInventory(new List<OrderLine>
             {
                 new OrderLine
                 {
-                    Customer = clinic,
-                    Product = procrit,
+                    Customer = _clinic,
+                    Product = _procrit,
                     Quantity = 3
                 }
             });
@@ -48,6 +52,38 @@ namespace PharmaNet.Fulfillment.Test
             Assert.AreEqual(1, pickLists.Count);
             Assert.AreEqual(11190, pickLists[0].Product.ProductId);
             Assert.AreEqual(3, pickLists[0].Quantity);
+        }
+
+        [TestMethod]
+        public void OutOfStock()
+        {
+            List<PickList> pickLists = _service.AllocateInventory(new List<OrderLine>
+            {
+                new OrderLine
+                {
+                    Customer = _clinic,
+                    Product = _procrit,
+                    Quantity = 10
+                }
+            });
+
+            Assert.AreEqual(0, pickLists.Count);
+        }
+
+        [TestMethod]
+        public void InventoryChangesWhenPicked()
+        {
+            _service.AllocateInventory(new List<OrderLine>
+            {
+                new OrderLine
+                {
+                    Customer = _clinic,
+                    Product = _procrit,
+                    Quantity = 3
+                }
+            });
+
+            Assert.AreEqual(4, _warehouse1.GetInventoryOnHand(_procrit));
         }
     }
 }
