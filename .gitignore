@@ -1,4 +1,6 @@
 packages/
+Infrastructure/Package/Repository/*.nupkg
+Infrastructure/Package/Repository/lib/
 
 #################
 ## Eclipse

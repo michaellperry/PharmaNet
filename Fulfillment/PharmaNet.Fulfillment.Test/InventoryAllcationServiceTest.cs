@@ -5,6 +5,7 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PharmaNet.Fulfillment.Application;
 using PharmaNet.Fulfillment.Domain;
+using PharmaNet.Infrastructure.Repository;
 
 namespace PharmaNet.Fulfillment.Test
 {
@@ -12,11 +13,17 @@ namespace PharmaNet.Fulfillment.Test
     public class InventoryAllcationServiceTest
     {
         private InventoryAllocationService _service;
+        private FakeRepository<Product> _products;
 
         [TestInitialize]
         public void Initialize()
         {
-            _service = new InventoryAllocationService();
+            _products = new FakeRepository<Product>();
+            _products.Add(new Product
+            {
+                ProductId = 11190
+            });
+            _service = new InventoryAllocationService(_products);
         }
 
         [TestMethod]

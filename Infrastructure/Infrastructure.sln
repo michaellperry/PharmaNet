@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Infrastructure.Repository", "PharmaNet.Infrastructure.Repository\PharmaNet.Infrastructure.Repository.csproj", "{327A7C53-FD7B-49D0-A0BA-C7171264D7DD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Package", "Package", "{920C41D6-2984-4CED-8754-7B91DC39D306}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Repository", "Repository", "{D98C33E0-D479-4596-920F-B7BEBCEF0AFA}"
+	ProjectSection(SolutionItems) = preProject
+		Package\Repository\PharmaNet.Infrastructure.Repository.nuspec = Package\Repository\PharmaNet.Infrastructure.Repository.nuspec
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{327A7C53-FD7B-49D0-A0BA-C7171264D7DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{327A7C53-FD7B-49D0-A0BA-C7171264D7DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{327A7C53-FD7B-49D0-A0BA-C7171264D7DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{327A7C53-FD7B-49D0-A0BA-C7171264D7DD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D98C33E0-D479-4596-920F-B7BEBCEF0AFA} = {920C41D6-2984-4CED-8754-7B91DC39D306}
+	EndGlobalSection
+EndGlobal

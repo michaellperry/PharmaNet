@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FEB932F4-3E7D-49C3-A434-E96515DC4236}</ProjectGuid>
+    <ProjectGuid>{327A7C53-FD7B-49D0-A0BA-C7171264D7DD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PharmaNet.Fulfillment.Application</RootNamespace>
-    <AssemblyName>PharmaNet.Fulfillment.Application</AssemblyName>
+    <RootNamespace>PharmaNet.Infrastructure.Repository</RootNamespace>
+    <AssemblyName>PharmaNet.Infrastructure.Repository</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,9 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PharmaNet.Infrastructure.Repository">
-      <HintPath>..\packages\PharmaNet.Infrastructure.Repository.1.0.0\lib\net40\PharmaNet.Infrastructure.Repository.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,19 +40,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InventoryAllocationService.cs" />
+    <Compile Include="FakeRepository.cs" />
+    <Compile Include="IRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\PharmaNet.Fulfillment.Domain\PharmaNet.Fulfillment.Domain.csproj">
-      <Project>{7E112EA0-15B1-426B-8BBC-FADF5234278B}</Project>
-      <Name>PharmaNet.Fulfillment.Domain</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)Package\Repository\lib\net40\</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
