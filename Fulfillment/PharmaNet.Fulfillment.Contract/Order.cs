@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.ServiceModel.Web;
-using System.Text;
 
-namespace PharmaNet.Fulfillment.Presentation
+namespace PharmaNet.Fulfillment.Contract
 {
     [DataContract]
     public class Order
@@ -15,7 +10,7 @@ namespace PharmaNet.Fulfillment.Presentation
         public string CustomerName { get; set; }
 
         [DataMember]
-        public bool CustomerAddress { get; set; }
+        public string CustomerAddress { get; set; }
 
         [DataMember]
         public List<Line> Lines { get; set; }

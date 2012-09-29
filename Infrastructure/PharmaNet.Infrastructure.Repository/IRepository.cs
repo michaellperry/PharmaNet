@@ -6,7 +6,7 @@ namespace PharmaNet.Infrastructure.Repository
 {
     public interface IRepository<T>
     {
-        void Add(T item);
+        T Add(T item);
         void Remove(T item);
         IQueryable<T> GetAll();
     }

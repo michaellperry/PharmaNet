@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PharmaNet.Infrastructure.Repository</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <authors>Michael L Perry</authors>
     <owners>Michael L Perry</owners>
     <projectUrl>http://github.com/michaellperry/PharmaNet</projectUrl>

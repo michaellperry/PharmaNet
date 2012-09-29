@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{7E112EA0-15B1-426B-8BBC-FADF5234278B}</ProjectGuid>
+    <ProjectGuid>{1D31BB1F-1B2B-4E40-B9E5-548D0FA3CB7A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PharmaNet.Fulfillment.Domain</RootNamespace>
-    <AssemblyName>PharmaNet.Fulfillment.Domain</AssemblyName>
+    <RootNamespace>PharmaNet.Fulfillment.SQL</RootNamespace>
+    <AssemblyName>PharmaNet.Fulfillment.SQL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,8 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="PharmaNet.Infrastructure.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\PharmaNet.Infrastructure.Repository.1.0.1\lib\net40\PharmaNet.Infrastructure.Repository.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -40,16 +49,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Customer.cs" />
-    <Compile Include="OrderLine.cs" />
-    <Compile Include="PickList.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="FulfillmentDB.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Warehouse.cs" />
+    <Compile Include="SQLRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="Model.cd" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PharmaNet.Fulfillment.Domain\PharmaNet.Fulfillment.Domain.csproj">
+      <Project>{7E112EA0-15B1-426B-8BBC-FADF5234278B}</Project>
+      <Name>PharmaNet.Fulfillment.Domain</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

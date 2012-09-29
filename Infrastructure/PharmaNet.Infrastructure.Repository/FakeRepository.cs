@@ -9,9 +9,10 @@ namespace PharmaNet.Infrastructure.Repository
     {
         private List<T> _collection = new List<T>();
 
-        public void Add(T item)
+        public T Add(T item)
         {
             _collection.Add(item);
+            return item;
         }
 
         public void Remove(T item)

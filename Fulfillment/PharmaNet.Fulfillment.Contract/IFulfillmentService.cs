@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.ServiceModel;
 
-namespace PharmaNet.Fulfillment.Presentation
+namespace PharmaNet.Fulfillment.Contract
 {
     [ServiceContract]
     public interface IFulfillmentService
