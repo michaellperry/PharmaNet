@@ -12,16 +12,17 @@ namespace PharmaNet.Fulfillment.Consumer
         static void Main(string[] args)
         {
             ServiceClient<IFulfillmentService> client = new ServiceClient<IFulfillmentService>();
-            var confirmation = client.CallService("BasicHttpBinding_IFulfillmentService",
-                s => s.PlaceOrder(new Order
+            var order = new Order
+            {
+                CustomerName = "Sherlock Holmes",
+                CustomerAddress = "121B Baker Street",
+                Lines = new List<Line>
                 {
-                    CustomerName = "Sherlock Holmes",
-                    CustomerAddress = "121B Baker Street",
-                    Lines = new List<Line>
-                    {
-                        new Line { ProductNumber = 11190, Quantity = 2 }
-                    }
-                }));
+                    new Line { ProductNumber = 11190, Quantity = 2 }
+                }
+            };
+            var confirmation = client.CallService("BasicHttpBinding_IFulfillmentService",
+                s => s.PlaceOrder(order));
 
             String.Format("Confirmed {0} shipments:", confirmation.Shipments.Count);
                                                          

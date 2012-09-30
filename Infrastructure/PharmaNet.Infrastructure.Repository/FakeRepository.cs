@@ -24,5 +24,9 @@ namespace PharmaNet.Infrastructure.Repository
         {
             return _collection.AsQueryable();
         }
+
+        public void SaveChanges()
+        {
+        }
     }
 }

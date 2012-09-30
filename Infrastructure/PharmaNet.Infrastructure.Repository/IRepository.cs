@@ -9,5 +9,6 @@ namespace PharmaNet.Infrastructure.Repository
         T Add(T item);
         void Remove(T item);
         IQueryable<T> GetAll();
+        void SaveChanges();
     }
 }

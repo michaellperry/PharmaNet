@@ -19,7 +19,6 @@ namespace PharmaNet.Infrastructure.SQL
         public T Add(T item)
         {
             _dbSet.Add(item);
-            _context.SaveChanges();
             return item;
         }
 
@@ -31,6 +30,10 @@ namespace PharmaNet.Infrastructure.SQL
         public void Remove(T item)
         {
             _dbSet.Remove(item);
+        }
+
+        public void SaveChanges()
+        {
             _context.SaveChanges();
         }
     }

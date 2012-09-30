@@ -8,6 +8,6 @@ namespace PharmaNet.Fulfillment.Domain
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public List<Inventory> Inventory { get; set; }
+        public virtual IList<Inventory> Inventory { get; set; }
     }
 }
