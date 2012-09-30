@@ -22,7 +22,7 @@ namespace PharmaNet.Fulfillment.Presentation
             FulfillmentDB context = new FulfillmentDB();
 
             _customerService = new CustomerService(context.GetCustomerRepository());
-            _productService = new ProductService((IRepository<Product>)context.GetProductRepository());
+            _productService = new ProductService(context.GetProductRepository());
             _inventoryAllocationService = new InventoryAllocationService(context.GetWarehouseRepository());
         }
 

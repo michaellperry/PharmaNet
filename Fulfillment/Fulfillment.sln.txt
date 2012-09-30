@@ -1,0 +1,12 @@
+digraph "C:\Projects\PharmaNet\Fulfillment\Fulfillment.sln" {
+  rankdir=TB
+  "Application"->"Domain"
+  "Test"->"Application"
+  "Test"->"Domain"
+  "SQL"->"Domain"
+  "Consumer"->"Contract"
+  "Presentation"->"Application"
+  "Presentation"->"Contract"
+  "Presentation"->"Domain"
+  "Presentation"->"SQL"
+}
