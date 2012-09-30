@@ -1,20 +1,18 @@
-﻿using System;
-using PharmaNet.Fulfillment.Contract;
-using PharmaNet.Fulfillment.Application;
-using PharmaNet.Fulfillment.SQL;
-using System.Collections.Generic;
-using PharmaNet.Fulfillment.Domain;
+﻿using System.Collections.Generic;
 using System.Linq;
+using PharmaNet.Fulfillment.Application;
+using PharmaNet.Fulfillment.Contract;
+using PharmaNet.Fulfillment.Domain;
+using PharmaNet.Fulfillment.SQL;
 using PharmaNet.Infrastructure.Repository;
-using System.Transactions;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
     public class FulfillmentService : IFulfillmentService
     {
-        private IRepository<Warehouse> _warehouseRepository;
-        private IRepository<Customer> _customerRepository;
-        private IRepository<Product> _productRepository;
+        private CustomerService _customerService;
+        private ProductService _productService;
+        private InventoryAllocationService _inventoryAllocationService;
 
         public FulfillmentService()
         {
@@ -23,26 +21,25 @@ namespace PharmaNet.Fulfillment.Presentation
 
             FulfillmentDB context = new FulfillmentDB();
 
-            _warehouseRepository = context.GetWarehouseRepository();
-            _customerRepository = context.GetCustomerRepository();
-            _productRepository = context.GetProductRepository();
+            _customerService = new CustomerService(context.GetCustomerRepository());
+            _productService = new ProductService((IRepository<Product>)context.GetProductRepository());
+            _inventoryAllocationService = new InventoryAllocationService(context.GetWarehouseRepository());
         }
 
         // BAD CODE!
         // This is an example of how NOT to write a service.
         public Confirmation PlaceOrder(Order order)
         {
-            InventoryAllocationService inventoryAllocationService = new InventoryAllocationService(_warehouseRepository);
-            Customer customer = GetCustomer(order);
+            Customer customer = _customerService.GetCustomer(order.CustomerName, order.CustomerAddress);
             List<OrderLine> orderLines = order.Lines
                 .Select(line => new OrderLine
                 {
                     Customer = customer,
-                    Product = GetProduct(line.ProductNumber),
+                    Product = _productService.GetProduct(line.ProductNumber),
                     Quantity = line.Quantity
                 })
                 .ToList();
-            List<PickList> pickLists = inventoryAllocationService.AllocateInventory(orderLines);
+            List<PickList> pickLists = _inventoryAllocationService.AllocateInventory(orderLines);
 
             return new Confirmation
             {
@@ -55,31 +52,6 @@ namespace PharmaNet.Fulfillment.Presentation
                     })
                     .ToList()
             };
-        }
-
-        private Customer GetCustomer(Order order)
-        {
-            using (new TransactionScope())
-            {
-                Customer customer = _customerRepository.GetAll()
-                    .FirstOrDefault(c => c.Name == order.CustomerName);
-                if (customer == null)
-                {
-                    customer = _customerRepository.Add(new Customer
-                    {
-                        Name = order.CustomerName,
-                        ShippingAddress = order.CustomerAddress
-                    });
-                    _customerRepository.SaveChanges();
-                }
-                return customer;
-            }
-        }
-
-        private Product GetProduct(int productNumber)
-        {
-            return _productRepository.GetAll()
-                .FirstOrDefault(p => p.ProductNumber == productNumber);
         }
     }
 }
