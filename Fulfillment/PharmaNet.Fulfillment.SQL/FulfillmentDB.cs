@@ -16,6 +16,7 @@ namespace PharmaNet.Fulfillment.SQL
         public DbSet<Customer> Customers { get; set; }
         public DbSet<Warehouse> Warehouses { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<PickList> PickLists { get; set; }
 
         public IRepository<Customer> GetCustomerRepository()
         {
@@ -30,6 +31,11 @@ namespace PharmaNet.Fulfillment.SQL
         public IRepository<Product> GetProductRepository()
         {
             return new SQLRepository<Product>(this, Products);
+        }
+
+        public IRepository<PickList> GetPickListRepository()
+        {
+            return new SQLRepository<PickList>(this, PickLists);
         }
     }
 }

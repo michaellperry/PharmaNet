@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
-using System.Transactions;
 using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Infrastructure.Repository;
 
@@ -15,28 +15,28 @@ namespace PharmaNet.Fulfillment.Application
             _warehouseRepository = warehouseRepository;
         }
 
-        public List<PickList> AllocateInventory(List<OrderLine> orderLines)
+        public List<PickList> AllocateInventory(
+            Guid orderId,
+            List<OrderLine> orderLines)
         {
-            using (new TransactionScope())
+            List<PickList> pickLists = new List<PickList>();
+            foreach (var orderLine in orderLines)
             {
-                List<PickList> pickLists = new List<PickList>();
-                foreach (var orderLine in orderLines)
-                {
-                    Warehouse warehouse = LocateProduct(
-                        orderLine.Product,
-                        orderLine.Quantity);
+                Warehouse warehouse = LocateProduct(
+                    orderLine.Product,
+                    orderLine.Quantity);
 
-                    if (warehouse != null)
-                    {
-                        PickList picklist = PickProduct(
-                            orderLine.Product,
-                            orderLine.Quantity,
-                            warehouse);
-                        pickLists.Add(picklist);
-                    }
+                if (warehouse != null)
+                {
+                    PickList picklist = PickProduct(
+                        orderId,
+                        orderLine.Product,
+                        orderLine.Quantity,
+                        warehouse);
+                    pickLists.Add(picklist);
                 }
-                return pickLists;
             }
+            return pickLists;
         }
 
         private Warehouse LocateProduct(
@@ -50,6 +50,7 @@ namespace PharmaNet.Fulfillment.Application
         }
 
         private PickList PickProduct(
+            Guid orderId,
             Product product,
             int quantity,
             Warehouse warehouse)
@@ -62,6 +63,7 @@ namespace PharmaNet.Fulfillment.Application
 
             return new PickList
             {
+                OrderId = orderId,
                 Product = product,
                 Quantity = quantity,
                 Warehouse = warehouse

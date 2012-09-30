@@ -11,6 +11,8 @@ namespace PharmaNet.Fulfillment.Consumer
     {
         static void Main(string[] args)
         {
+            List<Guid> orderIds = new List<Guid>();
+
             ServiceClient<IFulfillmentService> client = new ServiceClient<IFulfillmentService>();
             var order = new Order
             {
@@ -26,7 +28,15 @@ namespace PharmaNet.Fulfillment.Consumer
             {
                 try
                 {
+                    order.OrderId = Guid.NewGuid();
                     PlaceOrder(client, order);
+                    orderIds.Add(order.OrderId);
+
+                    List<Guid> confirmedOrders = orderIds
+                        .Where(id => CheckOrderStatus(client, id))
+                        .ToList();
+                    orderIds.RemoveAll(id =>
+                        confirmedOrders.Contains(id));
                 }
                 catch (Exception ex)
                 {
@@ -37,15 +47,27 @@ namespace PharmaNet.Fulfillment.Consumer
 
         private static void PlaceOrder(ServiceClient<IFulfillmentService> client, Order order)
         {
+            client.CallService("BasicHttpBinding_IFulfillmentService",
+                s => s.PlaceOrder(order));
+        }
+
+        private static bool CheckOrderStatus(ServiceClient<IFulfillmentService> client, Guid orderId)
+        {
             var confirmation = client.CallService("BasicHttpBinding_IFulfillmentService",
-                            s => s.PlaceOrder(order));
+                s => s.CheckOrderStatus(orderId));
 
-            String.Format("Confirmed {0} shipments:", confirmation.Shipments.Count);
-
-            foreach (var shipment in confirmation.Shipments)
+            if (confirmation != null)
             {
-                Console.WriteLine(String.Format("{0} {1}: {2}", shipment.Quantity, shipment.ProductId, shipment.TrackingNumber));
+                String.Format("Confirmed {0} shipments:", confirmation.Shipments.Count);
+
+                foreach (var shipment in confirmation.Shipments)
+                {
+                    Console.WriteLine(String.Format("{0} {1}: {2}", shipment.Quantity, shipment.ProductId, shipment.TrackingNumber));
+                }
+                return true;
             }
+            else
+                return false;
         }
     }
 }

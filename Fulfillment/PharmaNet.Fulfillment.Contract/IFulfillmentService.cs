@@ -1,13 +1,15 @@
 using System.ServiceModel;
+using System;
 
 namespace PharmaNet.Fulfillment.Contract
 {
     [ServiceContract]
     public interface IFulfillmentService
     {
-        // BAD CODE!
-        // This is an example of how NOT to write a service.
         [OperationContract]
-        Confirmation PlaceOrder(Order composite);
+        void PlaceOrder(Order composite);
+
+        [OperationContract]
+        Confirmation CheckOrderStatus(Guid orderId);
     }
 }

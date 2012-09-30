@@ -45,15 +45,17 @@ namespace PharmaNet.Fulfillment.Test
         [TestMethod]
         public void CanAllocateFromOneWarehouse()
         {
-            List<PickList> pickLists = _service.AllocateInventory(new List<OrderLine>
-            {
-                new OrderLine
+            List<PickList> pickLists = _service.AllocateInventory(
+                Guid.NewGuid(),
+                new List<OrderLine>
                 {
-                    Customer = _clinic,
-                    Product = _procrit,
-                    Quantity = 3
-                }
-            });
+                    new OrderLine
+                    {
+                        Customer = _clinic,
+                        Product = _procrit,
+                        Quantity = 3
+                    }
+                });
 
             Assert.AreEqual(1, pickLists.Count);
             Assert.AreEqual(11190, pickLists[0].Product.ProductId);
@@ -63,15 +65,17 @@ namespace PharmaNet.Fulfillment.Test
         [TestMethod]
         public void OutOfStock()
         {
-            List<PickList> pickLists = _service.AllocateInventory(new List<OrderLine>
-            {
-                new OrderLine
+            List<PickList> pickLists = _service.AllocateInventory(
+                Guid.NewGuid(),
+                new List<OrderLine>
                 {
-                    Customer = _clinic,
-                    Product = _procrit,
-                    Quantity = 10
-                }
-            });
+                    new OrderLine
+                    {
+                        Customer = _clinic,
+                        Product = _procrit,
+                        Quantity = 10
+                    }
+                });
 
             Assert.AreEqual(0, pickLists.Count);
         }
@@ -79,15 +83,17 @@ namespace PharmaNet.Fulfillment.Test
         [TestMethod]
         public void InventoryChangesWhenPicked()
         {
-            _service.AllocateInventory(new List<OrderLine>
-            {
-                new OrderLine
+            _service.AllocateInventory(
+                Guid.NewGuid(),
+                new List<OrderLine>
                 {
-                    Customer = _clinic,
-                    Product = _procrit,
-                    Quantity = 3
-                }
-            });
+                    new OrderLine
+                    {
+                        Customer = _clinic,
+                        Product = _procrit,
+                        Quantity = 3
+                    }
+                });
 
             Assert.AreEqual(4, _warehouse1.Inventory
                 .Where(i => i.Product == _procrit)

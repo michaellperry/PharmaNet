@@ -1,11 +1,15 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System;
 
 namespace PharmaNet.Fulfillment.Contract
 {
     [DataContract]
     public class Order
     {
+        [DataMember]
+        public Guid OrderId { get; set; }
+
         [DataMember]
         public string CustomerName { get; set; }
 
