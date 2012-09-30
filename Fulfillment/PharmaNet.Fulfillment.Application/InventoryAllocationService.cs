@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Infrastructure.Repository;
+using System.Transactions;
 
 namespace PharmaNet.Fulfillment.Application
 {
@@ -18,23 +19,26 @@ namespace PharmaNet.Fulfillment.Application
 
         public List<PickList> AllocateInventory(List<OrderLine> orderLines)
         {
-            List<PickList> pickLists = new List<PickList>();
-            foreach (var orderLine in orderLines)
+            using (new TransactionScope())
             {
-                Warehouse warehouse = LocateProduct(
-                    orderLine.Product,
-                    orderLine.Quantity);
-
-                if (warehouse != null)
+                List<PickList> pickLists = new List<PickList>();
+                foreach (var orderLine in orderLines)
                 {
-                    PickList picklist = PickProduct(
-                        orderLine.Product, 
-                        orderLine.Quantity, 
-                        warehouse);
-                    pickLists.Add(picklist);
+                    Warehouse warehouse = LocateProduct(
+                        orderLine.Product,
+                        orderLine.Quantity);
+
+                    if (warehouse != null)
+                    {
+                        PickList picklist = PickProduct(
+                            orderLine.Product,
+                            orderLine.Quantity,
+                            warehouse);
+                        pickLists.Add(picklist);
+                    }
                 }
+                return pickLists;
             }
-            return pickLists;
         }
 
         private Warehouse LocateProduct(

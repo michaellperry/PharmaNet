@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using PharmaNet.Fulfillment.Domain;
 using System.Linq;
 using PharmaNet.Infrastructure.Repository;
+using System.Transactions;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
@@ -58,18 +59,21 @@ namespace PharmaNet.Fulfillment.Presentation
 
         private Customer GetCustomer(Order order)
         {
-            Customer customer = _customerRepository.GetAll()
-                .FirstOrDefault(c => c.Name == order.CustomerName);
-            if (customer == null)
+            using (new TransactionScope())
             {
-                customer = _customerRepository.Add(new Customer
+                Customer customer = _customerRepository.GetAll()
+                    .FirstOrDefault(c => c.Name == order.CustomerName);
+                if (customer == null)
                 {
-                    Name = order.CustomerName,
-                    ShippingAddress = order.CustomerAddress
-                });
-                _customerRepository.SaveChanges();
+                    customer = _customerRepository.Add(new Customer
+                    {
+                        Name = order.CustomerName,
+                        ShippingAddress = order.CustomerAddress
+                    });
+                    _customerRepository.SaveChanges();
+                }
+                return customer;
             }
-            return customer;
         }
 
         private Product GetProduct(int productNumber)
