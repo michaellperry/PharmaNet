@@ -35,7 +35,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="PharmaNet.Infrastructure.Service, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PharmaNet.Infrastructure.Service.1.0.1\lib\net40\PharmaNet.Infrastructure.Service.dll</HintPath>
+      <HintPath>..\packages\PharmaNet.Infrastructure.Service.1.0.2\lib\net40\PharmaNet.Infrastructure.Service.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

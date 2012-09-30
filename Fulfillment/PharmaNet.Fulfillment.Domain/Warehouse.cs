@@ -4,6 +4,8 @@ namespace PharmaNet.Fulfillment.Domain
 {
     public class Warehouse
     {
+        public int Id { get; set; }
+
         private Dictionary<int, int> _inventoryOnHandByProductId = new Dictionary<int, int>();
 
         public int GetInventoryOnHand(Product product)

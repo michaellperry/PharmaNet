@@ -9,9 +9,9 @@ namespace PharmaNet.Infrastructure.Service
 {
     public class ServiceClient<T>
     {
-        public void CallService(Action<T> serviceCall)
+        public void CallService(string endpointConfigurationName, Action<T> serviceCall)
         {
-            using (ChannelFactory<T> channelFactory = new ChannelFactory<T>())
+            using (ChannelFactory<T> channelFactory = new ChannelFactory<T>(endpointConfigurationName))
             {
                 channelFactory.Open();
                 serviceCall(channelFactory.CreateChannel());
@@ -19,9 +19,9 @@ namespace PharmaNet.Infrastructure.Service
             }
         }
 
-        public R CallService<R>(Func<T,R> serviceCall)
+        public R CallService<R>(string endpointConfigurationName, Func<T, R> serviceCall)
         {
-            using (ChannelFactory<T> channelFactory = new ChannelFactory<T>())
+            using (ChannelFactory<T> channelFactory = new ChannelFactory<T>(endpointConfigurationName))
             {
                 channelFactory.Open();
                 R result = serviceCall(channelFactory.CreateChannel());
