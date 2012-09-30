@@ -22,9 +22,15 @@ namespace PharmaNet.Fulfillment.Test
         public void Initialize()
         {
             _warehouses = new FakeRepository<Warehouse>();
-            _warehouse1 = new Warehouse();
+            _warehouse1 = new Warehouse { Name = "Hanger 18" };
             _procrit = new Product { ProductId = 11190 };
-            _warehouse1.SetInventoryOnHand(_procrit, 7);
+
+            _warehouse1.Inventory = new List<Inventory>();
+            _warehouse1.Inventory.Add(new Inventory
+            {
+                Product = _procrit,
+                QuantityOnHand = 7
+            });
             _warehouses.Add(_warehouse1);
 
             _clinic = new Customer
@@ -83,7 +89,10 @@ namespace PharmaNet.Fulfillment.Test
                 }
             });
 
-            Assert.AreEqual(4, _warehouse1.GetInventoryOnHand(_procrit));
+            Assert.AreEqual(4, _warehouse1.Inventory
+                .Where(i => i.Product == _procrit)
+                .Select(i => i.QuantityOnHand)
+                .FirstOrDefault());
         }
     }
 }

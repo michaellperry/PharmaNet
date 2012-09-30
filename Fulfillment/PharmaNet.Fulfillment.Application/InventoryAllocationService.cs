@@ -56,7 +56,18 @@ namespace PharmaNet.Fulfillment.Application
                 .Where(i => i.Product == product)
                 .Select(i => i.QuantityOnHand)
                 .FirstOrDefault();
-            warehouse.SetInventoryOnHand(product, inventoryOnHand - quantity);
+
+            var inventory = warehouse.Inventory
+                .FirstOrDefault(i => i.Product == product);
+            if (inventory == null)
+            {
+                warehouse.Inventory.Add(new Inventory { Product = product, QuantityOnHand = inventoryOnHand - quantity });
+            }
+            else
+            {
+                inventory.QuantityOnHand = inventoryOnHand - quantity;
+            }
+
             return new PickList
             {
                 Product = product,

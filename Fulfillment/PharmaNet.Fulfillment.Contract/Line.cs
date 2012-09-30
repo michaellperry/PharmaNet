@@ -6,7 +6,7 @@ namespace PharmaNet.Fulfillment.Contract
     public class Line
     {
         [DataMember]
-        public int ProductId { get; set; }
+        public int ProductNumber { get; set; }
 
         [DataMember]
         public int Quantity { get; set; }

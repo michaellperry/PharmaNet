@@ -19,7 +19,7 @@ namespace PharmaNet.Fulfillment.Consumer
                     CustomerAddress = "121B Baker Street",
                     Lines = new List<Line>
                     {
-                        new Line { ProductId = 11190, Quantity = 2 }
+                        new Line { ProductNumber = 11190, Quantity = 2 }
                     }
                 }));
 

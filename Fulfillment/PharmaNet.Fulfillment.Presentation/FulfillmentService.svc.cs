@@ -35,7 +35,7 @@ namespace PharmaNet.Fulfillment.Presentation
                 .Select(line => new OrderLine
                 {
                     Customer = customer,
-                    Product = GetProduct(context, line.ProductId),
+                    Product = GetProduct(context, line.ProductNumber),
                     Quantity = line.Quantity
                 })
                 .ToList();
@@ -54,11 +54,11 @@ namespace PharmaNet.Fulfillment.Presentation
             };
         }
 
-        private Product GetProduct(FulfillmentDB context, int productId)
+        private Product GetProduct(FulfillmentDB context, int productNumber)
         {
             IRepository<Product> products = context.GetProductRepository();
             return products.GetAll()
-                .FirstOrDefault(p => p.ProductId == productId);
+                .FirstOrDefault(p => p.ProductNumber == productNumber);
         }
     }
 }

@@ -8,5 +8,7 @@ namespace PharmaNet.Fulfillment.Domain
     public class Product
     {
         public int ProductId { get; set; }
+
+        public int ProductNumber { get; set; }
     }
 }
