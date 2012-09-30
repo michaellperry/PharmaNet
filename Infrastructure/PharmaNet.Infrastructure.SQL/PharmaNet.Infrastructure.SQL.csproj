@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{FEB932F4-3E7D-49C3-A434-E96515DC4236}</ProjectGuid>
+    <ProjectGuid>{88D88C4E-E370-4EF4-94CB-6D61B9B96A67}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>PharmaNet.Fulfillment.Application</RootNamespace>
-    <AssemblyName>PharmaNet.Fulfillment.Application</AssemblyName>
+    <RootNamespace>PharmaNet.Infrastructure.SQL</RootNamespace>
+    <AssemblyName>PharmaNet.Infrastructure.SQL</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,11 +31,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PharmaNet.Infrastructure.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PharmaNet.Infrastructure.Repository.1.0.2\lib\net40\PharmaNet.Infrastructure.Repository.dll</HintPath>
+    <Reference Include="EntityFramework, Version=4.4.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Entity" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -43,19 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="InventoryAllocationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SQLRepository.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\PharmaNet.Fulfillment.Domain\PharmaNet.Fulfillment.Domain.csproj">
-      <Project>{7E112EA0-15B1-426B-8BBC-FADF5234278B}</Project>
-      <Name>PharmaNet.Fulfillment.Domain</Name>
+    <ProjectReference Include="..\PharmaNet.Infrastructure.Repository\PharmaNet.Infrastructure.Repository.csproj">
+      <Project>{327A7C53-FD7B-49D0-A0BA-C7171264D7DD}</Project>
+      <Name>PharmaNet.Infrastructure.Repository</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /y $(TargetPath) $(SolutionDir)Package\SQL\lib\net40\</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

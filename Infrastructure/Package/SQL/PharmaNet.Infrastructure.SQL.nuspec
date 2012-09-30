@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package >
   <metadata>
-    <id>PharmaNet.Infrastructure.Repository</id>
-    <version>1.0.2</version>
+    <id>PharmaNet.Infrastructure.SQL</id>
+    <version>1.0.0</version>
     <authors>Michael L Perry</authors>
     <owners>Michael L Perry</owners>
     <projectUrl>http://github.com/michaellperry/PharmaNet</projectUrl>
@@ -10,6 +10,7 @@
     <description>Internal package for PharmaNet developers.</description>
     <copyright>Copyright 2012 PharmaNet</copyright>
     <dependencies>
+      <dependency id="EntityFramework" version="5.0" />
     </dependencies>
   </metadata>
 </package>

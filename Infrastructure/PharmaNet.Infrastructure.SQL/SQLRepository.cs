@@ -2,7 +2,7 @@ using System.Data.Entity;
 using System.Linq;
 using PharmaNet.Infrastructure.Repository;
 
-namespace PharmaNet.Fulfillment.SQL
+namespace PharmaNet.Infrastructure.SQL
 {
     public class SQLRepository<T> : IRepository<T>
         where T : class

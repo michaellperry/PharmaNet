@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Infrastructure.Repository;
+using PharmaNet.Infrastructure.SQL;
 
 namespace PharmaNet.Fulfillment.SQL
 {

@@ -1,6 +1,8 @@
 packages/
 Infrastructure/Package/Repository/*.nupkg
 Infrastructure/Package/Repository/lib/
+Infrastructure/Package/Service/lib/
+Infrastructure/Package/SQL/lib/
 
 #################
 ## Eclipse
