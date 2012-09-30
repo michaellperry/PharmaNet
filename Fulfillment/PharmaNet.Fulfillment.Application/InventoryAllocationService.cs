@@ -42,7 +42,8 @@ namespace PharmaNet.Fulfillment.Application
             int quantity)
         {
             return _warehouseRepository.GetAll()
-                .Where(warehouse => warehouse.GetInventoryOnHand(product) >= quantity)
+                .Where(warehouse => warehouse.Inventory
+                    .Any(i => i.Product == product && i.QuantityOnHand >= quantity))
                 .FirstOrDefault();
         }
 
@@ -51,7 +52,10 @@ namespace PharmaNet.Fulfillment.Application
             int quantity,
             Warehouse warehouse)
         {
-            int inventoryOnHand = warehouse.GetInventoryOnHand(product);
+            int inventoryOnHand = warehouse.Inventory
+                .Where(i => i.Product == product)
+                .Select(i => i.QuantityOnHand)
+                .FirstOrDefault();
             warehouse.SetInventoryOnHand(product, inventoryOnHand - quantity);
             return new PickList
             {
