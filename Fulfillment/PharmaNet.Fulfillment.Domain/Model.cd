@@ -8,7 +8,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PharmaNet.Fulfillment.Domain.OrderLine">
-    <Position X="1.75" Y="2.5" Width="1.5" />
+    <Position X="1.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAECAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
       <FileName>OrderLine.cs</FileName>
@@ -19,9 +19,9 @@
     </ShowAsAssociation>
   </Class>
   <Class Name="PharmaNet.Fulfillment.Domain.PickList">
-    <Position X="4.25" Y="2.5" Width="1.5" />
+    <Position X="5.5" Y="2.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAA=</HashCode>
+      <HashCode>EAACAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAIgAAAAAA=</HashCode>
       <FileName>PickList.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
@@ -37,7 +37,7 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PharmaNet.Fulfillment.Domain.Warehouse">
-    <Position X="5.5" Y="0.5" Width="1.5" />
+    <Position X="8.25" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAgAAAAA=</HashCode>
       <FileName>Warehouse.cs</FileName>
@@ -47,13 +47,14 @@
     </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PharmaNet.Fulfillment.Domain.Inventory">
-    <Position X="6.5" Y="2.5" Width="1.5" />
+    <Position X="5.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>EAACAAAABAAAAAAAAAAAAAAAAAAAAAAgCAAAAAAAAAA=</HashCode>
       <FileName>Inventory.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Warehouse" />
+      <Property Name="Product" />
     </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />

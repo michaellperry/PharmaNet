@@ -30,13 +30,6 @@ namespace PharmaNet.Fulfillment.Consumer
                 {
                     order.OrderId = Guid.NewGuid();
                     PlaceOrder(client, order);
-                    orderIds.Add(order.OrderId);
-
-                    List<Guid> confirmedOrders = orderIds
-                        .Where(id => CheckOrderStatus(client, id))
-                        .ToList();
-                    orderIds.RemoveAll(id =>
-                        confirmedOrders.Contains(id));
                 }
                 catch (Exception ex)
                 {
@@ -47,27 +40,20 @@ namespace PharmaNet.Fulfillment.Consumer
 
         private static void PlaceOrder(ServiceClient<IFulfillmentService> client, Order order)
         {
-            client.CallService("BasicHttpBinding_IFulfillmentService",
+            var confirmation = client.CallService("BasicHttpBinding_IFulfillmentService",
                 s => s.PlaceOrder(order));
+
+            PrintConfirmation(confirmation);
         }
 
-        private static bool CheckOrderStatus(ServiceClient<IFulfillmentService> client, Guid orderId)
+        private static void PrintConfirmation(Confirmation confirmation)
         {
-            var confirmation = client.CallService("BasicHttpBinding_IFulfillmentService",
-                s => s.CheckOrderStatus(orderId));
+            String.Format("Confirmed {0} shipments:", confirmation.Shipments.Count);
 
-            if (confirmation != null)
+            foreach (var shipment in confirmation.Shipments)
             {
-                String.Format("Confirmed {0} shipments:", confirmation.Shipments.Count);
-
-                foreach (var shipment in confirmation.Shipments)
-                {
-                    Console.WriteLine(String.Format("{0} {1}: {2}", shipment.Quantity, shipment.ProductId, shipment.TrackingNumber));
-                }
-                return true;
+                Console.WriteLine(String.Format("{0} {1}: {2}", shipment.Quantity, shipment.ProductId, shipment.TrackingNumber));
             }
-            else
-                return false;
         }
     }
 }
