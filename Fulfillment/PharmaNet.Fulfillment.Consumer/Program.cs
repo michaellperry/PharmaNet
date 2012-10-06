@@ -13,14 +13,19 @@ namespace PharmaNet.Fulfillment.Consumer
         {
             List<Guid> orderIds = new List<Guid>();
 
-            ServiceClient<IFulfillmentService> client = new ServiceClient<IFulfillmentService>();
+            ServiceClient<IFulfillmentService> client =
+                new ServiceClient<IFulfillmentService>();
             var order = new Order
             {
                 CustomerName = "Sherlock Holmes",
                 CustomerAddress = "121B Baker Street",
                 Lines = new List<Line>
                 {
-                    new Line { ProductNumber = 11190, Quantity = 2 }
+                    new Line
+                    {
+                        ProductNumber = 11190,
+                        Quantity = 2
+                    }
                 }
             };
 
@@ -38,21 +43,30 @@ namespace PharmaNet.Fulfillment.Consumer
             }
         }
 
-        private static void PlaceOrder(ServiceClient<IFulfillmentService> client, Order order)
+        private static void PlaceOrder(
+            ServiceClient<IFulfillmentService> client,
+            Order order)
         {
-            var confirmation = client.CallService("BasicHttpBinding_IFulfillmentService",
+            var confirmation = client.CallService(
+                "BasicHttpBinding_IFulfillmentService",
                 s => s.PlaceOrder(order));
 
             PrintConfirmation(confirmation);
         }
 
-        private static void PrintConfirmation(Confirmation confirmation)
+        private static void PrintConfirmation(
+            Confirmation confirmation)
         {
-            String.Format("Confirmed {0} shipments:", confirmation.Shipments.Count);
+            String.Format("Confirmed {0} shipments:",
+                confirmation.Shipments.Count);
 
             foreach (var shipment in confirmation.Shipments)
             {
-                Console.WriteLine(String.Format("{0} {1}: {2}", shipment.Quantity, shipment.ProductId, shipment.TrackingNumber));
+                Console.WriteLine(String.Format(
+                    "{0} {1}: {2}",
+                    shipment.Quantity,
+                    shipment.ProductId,
+                    shipment.TrackingNumber));
             }
         }
     }

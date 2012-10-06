@@ -10,7 +10,8 @@ namespace PharmaNet.Fulfillment.Application
     {
         private IRepository<Warehouse> _warehouseRepository;
 
-        public InventoryAllocationService(IRepository<Warehouse> warehouseRepository)
+        public InventoryAllocationService(
+            IRepository<Warehouse> warehouseRepository)
         {
             _warehouseRepository = warehouseRepository;
         }
@@ -45,7 +46,9 @@ namespace PharmaNet.Fulfillment.Application
         {
             return _warehouseRepository.GetAll()
                 .Where(warehouse => warehouse.Inventory
-                    .Any(i => i.ProductId == product.ProductId && i.QuantityOnHand >= quantity))
+                    .Any(i =>
+                        i.ProductId == product.ProductId &&
+                        i.QuantityOnHand >= quantity))
                 .FirstOrDefault();
         }
 
@@ -56,9 +59,11 @@ namespace PharmaNet.Fulfillment.Application
             Warehouse warehouse)
         {
             var inventory = warehouse.Inventory
-                .Single(i => i.ProductId == product.ProductId);
+                .Single(i =>
+                    i.ProductId == product.ProductId);
 
-            inventory.QuantityOnHand = inventory.QuantityOnHand - quantity;
+            inventory.QuantityOnHand =
+                inventory.QuantityOnHand - quantity;
             _warehouseRepository.SaveChanges();
 
             return new PickList

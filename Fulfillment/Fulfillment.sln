@@ -22,6 +22,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Contr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Presentation", "PharmaNet.Fulfillment.Presentation\PharmaNet.Fulfillment.Presentation.csproj", "{22136F3C-A65A-4DAD-8738-942742276CCB}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{94DC6EAF-7A3D-4EE8-80FB-6DE2746E1425}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Fulfillment.vsmdi

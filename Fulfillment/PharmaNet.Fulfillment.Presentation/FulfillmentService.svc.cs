@@ -22,10 +22,14 @@ namespace PharmaNet.Fulfillment.Presentation
 
             FulfillmentDB context = new FulfillmentDB();
 
-            _customerService = new CustomerService(context.GetCustomerRepository());
-            _productService = new ProductService(context.GetProductRepository());
-            _inventoryAllocationService = new InventoryAllocationService(context.GetWarehouseRepository());
-            _pickListService = new PickListService(context.GetPickListRepository());
+            _customerService = new CustomerService(
+                context.GetCustomerRepository());
+            _productService = new ProductService(
+                context.GetProductRepository());
+            _inventoryAllocationService = new InventoryAllocationService(
+                context.GetWarehouseRepository());
+            _pickListService = new PickListService(
+                context.GetPickListRepository());
 
             OrderHandler.Instance.Start();
         }
@@ -39,7 +43,8 @@ namespace PharmaNet.Fulfillment.Presentation
                 Shipments = pickLists
                     .Select(pickList => new Shipment
                     {
-                        ProductId = pickList.Product.ProductId,
+                        ProductId = pickList.Product
+                            .ProductId,
                         Quantity = pickList.Quantity,
                         TrackingNumber = "123-456"
                     })
@@ -49,26 +54,33 @@ namespace PharmaNet.Fulfillment.Presentation
 
         private List<PickList> ProcessOrder(Order order)
         {
-            TransactionScope newTransactionScope = new TransactionScope();
-            using (newTransactionScope)
+            using (var scope = new TransactionScope())
             {
-                Customer customer = _customerService.GetCustomer(
-                    order.CustomerName, order.CustomerAddress);
+                Customer customer = _customerService
+                    .GetCustomer(
+                        order.CustomerName,
+                        order.CustomerAddress);
+
                 List<OrderLine> orderLines = order.Lines
                     .Select(line => new OrderLine
                     {
                         Customer = customer,
-                        Product = _productService.GetProduct(
-                            line.ProductNumber),
+                        Product = _productService
+                            .GetProduct(
+                                line.ProductNumber),
                         Quantity = line.Quantity
                     })
                     .ToList();
+
                 List<PickList> pickLists =
-                    _inventoryAllocationService.AllocateInventory(
-                        order.OrderId,
-                        orderLines);
+                    _inventoryAllocationService
+                        .AllocateInventory(
+                            order.OrderId,
+                            orderLines);
+
                 _pickListService.SavePickLists(pickLists);
-                newTransactionScope.Complete();
+
+                scope.Complete();
 
                 return pickLists;
             }
