@@ -34,9 +34,18 @@ namespace PharmaNet.Fulfillment.Presentation
             OrderHandler.Instance.Start();
         }
 
-        public Confirmation PlaceOrder(Order order)
+        public void PlaceOrder(Order order)
         {
-            List<PickList> pickLists = ProcessOrder(order);
+            MessageQueue<Order>.Instance.Send(order);
+        }
+
+        public Confirmation CheckOrderStatus(Guid orderId)
+        {
+            var pickLists = _pickListService
+                .GetPickLists(orderId);
+
+            if (!pickLists.Any())
+                return null;
 
             return new Confirmation
             {
@@ -50,40 +59,6 @@ namespace PharmaNet.Fulfillment.Presentation
                     })
                     .ToList()
             };
-        }
-
-        private List<PickList> ProcessOrder(Order order)
-        {
-            using (var scope = new TransactionScope())
-            {
-                Customer customer = _customerService
-                    .GetCustomer(
-                        order.CustomerName,
-                        order.CustomerAddress);
-
-                List<OrderLine> orderLines = order.Lines
-                    .Select(line => new OrderLine
-                    {
-                        Customer = customer,
-                        Product = _productService
-                            .GetProduct(
-                                line.ProductNumber),
-                        Quantity = line.Quantity
-                    })
-                    .ToList();
-
-                List<PickList> pickLists =
-                    _inventoryAllocationService
-                        .AllocateInventory(
-                            order.OrderId,
-                            orderLines);
-
-                _pickListService.SavePickLists(pickLists);
-
-                scope.Complete();
-
-                return pickLists;
-            }
         }
     }
 }

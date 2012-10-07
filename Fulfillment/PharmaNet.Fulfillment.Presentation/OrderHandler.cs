@@ -76,6 +76,34 @@ namespace PharmaNet.Fulfillment.Presentation
 
         private void ProcessOrder(Order order)
         {
+            using (var scope = new TransactionScope())
+            {
+                Customer customer = _customerService
+                    .GetCustomer(
+                        order.CustomerName,
+                        order.CustomerAddress);
+
+                List<OrderLine> orderLines = order.Lines
+                    .Select(line => new OrderLine
+                    {
+                        Customer = customer,
+                        Product = _productService
+                            .GetProduct(
+                                line.ProductNumber),
+                        Quantity = line.Quantity
+                    })
+                    .ToList();
+
+                List<PickList> pickLists =
+                    _inventoryAllocationService
+                        .AllocateInventory(
+                            order.OrderId,
+                            orderLines);
+
+                _pickListService.SavePickLists(pickLists);
+
+                scope.Complete();
+            }
         }
     }
 }

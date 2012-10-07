@@ -35,6 +35,14 @@ namespace PharmaNet.Fulfillment.Consumer
                 {
                     order.OrderId = Guid.NewGuid();
                     PlaceOrder(client, order);
+                    orderIds.Add(order.OrderId);
+
+                    var processedOrderIds = orderIds
+                        .Where(id => CheckOrderStatus(
+                            client, id))
+                        .ToList();
+                    orderIds.RemoveAll(id =>
+                        processedOrderIds.Contains(id));
                 }
                 catch (Exception ex)
                 {
@@ -47,11 +55,24 @@ namespace PharmaNet.Fulfillment.Consumer
             ServiceClient<IFulfillmentService> client,
             Order order)
         {
-            var confirmation = client.CallService(
+            client.CallService(
                 "BasicHttpBinding_IFulfillmentService",
                 s => s.PlaceOrder(order));
+        }
+
+        private static bool CheckOrderStatus(
+            ServiceClient<IFulfillmentService> client,
+            Guid orderId)
+        {
+            var confirmation = client.CallService(
+                "BasicHttpBinding_IFulfillmentService",
+                s => s.CheckOrderStatus(orderId));
+
+            if (confirmation == null)
+                return false;
 
             PrintConfirmation(confirmation);
+            return true;
         }
 
         private static void PrintConfirmation(
