@@ -7,6 +7,9 @@ namespace PharmaNet.Fulfillment.Contract
     public interface IFulfillmentService
     {
         [OperationContract]
-        Confirmation PlaceOrder(Order composite);
+        void PlaceOrder(Order composite);
+
+        [OperationContract]
+        Confirmation CheckOrderStatus(Guid orderId);
     }
 }
