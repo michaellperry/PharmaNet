@@ -66,6 +66,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FulfillmentService.svc" />
+    <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -77,6 +78,9 @@
   <ItemGroup>
     <Compile Include="FulfillmentService.svc.cs">
       <DependentUpon>FulfillmentService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="MessageQueue.cs" />
     <Compile Include="OrderHandler.cs" />
