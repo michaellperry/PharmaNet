@@ -3,12 +3,9 @@ using System;
 
 namespace PharmaNet.Fulfillment.Contract
 {
-    [ServiceContract]
-    public interface IFulfillmentService
+    [ServiceContract(Namespace = "http://qedcode.com/PharmaNet/Fulfillment/1.0")]
+    public interface IFulfillmentQueryService
     {
-        [OperationContract]
-        void PlaceOrder(Order composite);
-
         [OperationContract]
         Confirmation CheckOrderStatus(Guid orderId);
     }

@@ -65,7 +65,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FulfillmentService.svc" />
+    <Content Include="FulfillmentCommandService.svc" />
+    <Content Include="FulfillmentQueryService.svc" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -76,8 +77,11 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="FulfillmentService.svc.cs">
-      <DependentUpon>FulfillmentService.svc</DependentUpon>
+    <Compile Include="FulfillmentCommandService.svc.cs">
+      <DependentUpon>FulfillmentCommandService.svc</DependentUpon>
+    </Compile>
+    <Compile Include="FulfillmentQueryService.svc.cs">
+      <DependentUpon>FulfillmentQueryService.svc</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

@@ -1,22 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using PharmaNet.Fulfillment.Application;
 using PharmaNet.Fulfillment.Contract;
-using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Fulfillment.SQL;
-using System.Transactions;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
-    public class FulfillmentService : IFulfillmentService
+    public class FulfillmentQueryService : IFulfillmentQueryService
     {
         private CustomerService _customerService;
         private ProductService _productService;
         private InventoryAllocationService _inventoryAllocationService;
         private PickListService _pickListService;
 
-        public FulfillmentService()
+        public FulfillmentQueryService()
         {
             FulfillmentDB.Initialize();
 
@@ -30,13 +27,6 @@ namespace PharmaNet.Fulfillment.Presentation
                 context.GetWarehouseRepository());
             _pickListService = new PickListService(
                 context.GetPickListRepository());
-
-            OrderHandler.Instance.Start();
-        }
-
-        public void PlaceOrder(Order order)
-        {
-            MessageQueue<Order>.Instance.Send(order);
         }
 
         public Confirmation CheckOrderStatus(Guid orderId)

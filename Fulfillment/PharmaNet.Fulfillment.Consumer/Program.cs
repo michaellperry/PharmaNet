@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using PharmaNet.Fulfillment.Contract;
 using PharmaNet.Infrastructure.Service;
+using System.ServiceModel.MsmqIntegration;
 
 namespace PharmaNet.Fulfillment.Consumer
 {
@@ -13,8 +14,10 @@ namespace PharmaNet.Fulfillment.Consumer
         {
             List<Guid> orderIds = new List<Guid>();
 
-            ServiceClient<IFulfillmentService> client =
-                new ServiceClient<IFulfillmentService>();
+            ServiceClient<IFulfillmentQueryService> queryClient =
+                new ServiceClient<IFulfillmentQueryService>();
+            ServiceClient<IFulfillmentCommandService> commandClient =
+                new ServiceClient<IFulfillmentCommandService>();
             var order = new Order
             {
                 CustomerName = "Sherlock Holmes",
@@ -34,12 +37,12 @@ namespace PharmaNet.Fulfillment.Consumer
                 try
                 {
                     order.OrderId = Guid.NewGuid();
-                    PlaceOrder(client, order);
+                    PlaceOrder(commandClient, order);
                     orderIds.Add(order.OrderId);
 
                     var processedOrderIds = orderIds
                         .Where(id => CheckOrderStatus(
-                            client, id))
+                            queryClient, id))
                         .ToList();
                     orderIds.RemoveAll(id =>
                         processedOrderIds.Contains(id));
@@ -52,16 +55,16 @@ namespace PharmaNet.Fulfillment.Consumer
         }
 
         private static void PlaceOrder(
-            ServiceClient<IFulfillmentService> client,
+            ServiceClient<IFulfillmentCommandService> client,
             Order order)
         {
             client.CallService(
-                "BasicHttpBinding_IFulfillmentService",
-                s => s.PlaceOrder(order));
+                "MsmqEndpoint_Fulfillment",
+                s => s.PlaceOrder(new MsmqMessage<Order>(order)));
         }
 
         private static bool CheckOrderStatus(
-            ServiceClient<IFulfillmentService> client,
+            ServiceClient<IFulfillmentQueryService> client,
             Guid orderId)
         {
             var confirmation = client.CallService(
