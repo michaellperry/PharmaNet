@@ -25,6 +25,7 @@ namespace PharmaNet.Fulfillment.Presentation
         private ProductService _productService;
         private InventoryAllocationService _inventoryAllocationService;
         private PickListService _pickListService;
+        private IMessageQueue<Order> _messageQueue;
 
         private ManualResetEvent _stop =
             new ManualResetEvent(false);
@@ -41,6 +42,8 @@ namespace PharmaNet.Fulfillment.Presentation
             _productService = new ProductService(context.GetProductRepository());
             _inventoryAllocationService = new InventoryAllocationService(context.GetWarehouseRepository());
             _pickListService = new PickListService(context.GetPickListRepository());
+
+            _messageQueue = MemoryMessageQueue<Order>.Instance;
 
             _thread = new Thread(ThreadProc);
             _thread.Name = "OrderHandler";
@@ -66,7 +69,7 @@ namespace PharmaNet.Fulfillment.Presentation
             Order order;
             while (!_stop.WaitOne(0))
             {
-                if (MessageQueue<Order>.Instance
+                if (_messageQueue
                     .TryReceive(out order))
                 {
                     ProcessOrder(order);

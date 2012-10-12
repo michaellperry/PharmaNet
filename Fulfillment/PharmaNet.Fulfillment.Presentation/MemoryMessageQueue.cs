@@ -3,12 +3,12 @@ using System.Linq;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
-    public class MessageQueue<T>
+    public class MemoryMessageQueue<T> : IMessageQueue<T>
     {
-        private static MessageQueue<T> _instance =
-            new MessageQueue<T>();
+        private static MemoryMessageQueue<T> _instance =
+            new MemoryMessageQueue<T>();
 
-        public static MessageQueue<T> Instance
+        public static IMessageQueue<T> Instance
         {
             get { return _instance; }
         }

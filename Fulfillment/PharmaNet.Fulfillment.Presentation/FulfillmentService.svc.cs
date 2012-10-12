@@ -16,6 +16,8 @@ namespace PharmaNet.Fulfillment.Presentation
         private InventoryAllocationService _inventoryAllocationService;
         private PickListService _pickListService;
 
+        private IMessageQueue<Order> _messageQueue;
+
         public FulfillmentService()
         {
             FulfillmentDB.Initialize();
@@ -31,12 +33,14 @@ namespace PharmaNet.Fulfillment.Presentation
             _pickListService = new PickListService(
                 context.GetPickListRepository());
 
+            _messageQueue = MemoryMessageQueue<Order>.Instance;
+
             OrderHandler.Instance.Start();
         }
 
         public void PlaceOrder(Order order)
         {
-            MessageQueue<Order>.Instance.Send(order);
+            _messageQueue.Send(order);
         }
 
         public Confirmation CheckOrderStatus(Guid orderId)
