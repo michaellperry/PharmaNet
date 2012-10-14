@@ -1,11 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Messaging;
 using System.Transactions;
-using System.Diagnostics;
-using System.Runtime.Serialization;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
@@ -13,11 +8,13 @@ namespace PharmaNet.Fulfillment.Presentation
     {
         private static readonly TimeSpan Timeout =
             TimeSpan.FromSeconds(30.0);
+        private XmlMessageFormatter Formatter =
+            new XmlMessageFormatter(new Type[] { typeof(T) });
 
         private static MsmqMessageQueue<T> _instance =
             new MsmqMessageQueue<T>();
 
-        private MessageQueue _queue;
+        private string _path;
 
         public static IMessageQueue<T> Instance
         {
@@ -26,25 +23,29 @@ namespace PharmaNet.Fulfillment.Presentation
 
         public MsmqMessageQueue()
         {
-            string path = @".\private$\" +
+            _path = @".\private$\" +
                 typeof(T).FullName;
-            if (!MessageQueue.Exists(path))
+            if (!MessageQueue.Exists(_path))
             {
                 MessageQueue.Create(
-                    path,
+                    _path,
                     transactional: true);
             }
-            _queue = new MessageQueue(path);
-            _queue.DefaultPropertiesToSend
-                .Recoverable = true;
         }
 
         public void Send(T message)
         {
             using (var scope = new TransactionScope())
             {
-                _queue.Send(message,
-                    MessageQueueTransactionType.Automatic);
+                using (var queue = new MessageQueue(_path))
+                {
+                    queue.DefaultPropertiesToSend
+                        .Recoverable = true;
+                    queue.Formatter = Formatter;
+                    queue.Send(
+                        message,
+                        MessageQueueTransactionType.Automatic);
+                }
                 scope.Complete();
             }
         }
@@ -53,9 +54,14 @@ namespace PharmaNet.Fulfillment.Presentation
         {
             try
             {
-                message = (T)_queue.Receive(Timeout,
-                    MessageQueueTransactionType.Automatic)
-                    .Body;
+                using (var queue = new MessageQueue(_path))
+                {
+                    Message queueMessage = queue.Receive(
+                        Timeout,
+                        MessageQueueTransactionType.Automatic);
+                    queueMessage.Formatter = Formatter;
+                    message = (T)queueMessage.Body;
+                }
                 return true;
             }
             catch (Exception x)
