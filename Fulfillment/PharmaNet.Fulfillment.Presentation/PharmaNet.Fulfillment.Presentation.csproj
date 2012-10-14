@@ -84,7 +84,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="IMessageQueue.cs" />
-    <Compile Include="IMessageQueueImplementer.cs" />
+    <Compile Include="MsmqMessageQueue.cs" />
     <Compile Include="MemoryMessageQueue.cs" />
     <Compile Include="OrderHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

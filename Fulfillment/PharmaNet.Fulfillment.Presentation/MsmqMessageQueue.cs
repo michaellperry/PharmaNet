@@ -8,6 +8,9 @@ namespace PharmaNet.Fulfillment.Presentation
 {
     public class MsmqMessageQueue<T> : IMessageQueue<T>
     {
+        private static readonly TimeSpan Timeout =
+            TimeSpan.FromSeconds(30.0);
+
         private static MsmqMessageQueue<T> _instance =
             new MsmqMessageQueue<T>();
 
@@ -20,12 +23,17 @@ namespace PharmaNet.Fulfillment.Presentation
 
         public MsmqMessageQueue()
         {
-            string name = @".\private$\" + typeof(T).FullName;
+            string name = @".\private$\" +
+                typeof(T).FullName;
             if (!MessageQueue.Exists(name))
             {
-                MessageQueue.Create(name);
+                MessageQueue.Create(
+                    name,
+                    transactional: true);
             }
             _queue = new MessageQueue(name);
+            _queue.DefaultPropertiesToSend
+                .Recoverable = true;
         }
 
         public void Send(T message)
@@ -37,7 +45,9 @@ namespace PharmaNet.Fulfillment.Presentation
         {
             try
             {
-                message = (T)_queue.Receive(TimeSpan.Zero).Body;
+                message = (T)_queue
+                    .Receive(Timeout)
+                    .Body;
                 return true;
             }
             catch (Exception ex)
