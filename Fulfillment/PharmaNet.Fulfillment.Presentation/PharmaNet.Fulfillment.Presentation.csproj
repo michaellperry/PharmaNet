@@ -87,6 +87,7 @@
     <Compile Include="MsmqMessageQueue.cs" />
     <Compile Include="MemoryMessageQueue.cs" />
     <Compile Include="OrderHandler.cs" />
+    <Compile Include="OrderProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

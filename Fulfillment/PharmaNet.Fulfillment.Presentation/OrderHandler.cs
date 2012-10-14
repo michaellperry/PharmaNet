@@ -22,17 +22,11 @@ namespace PharmaNet.Fulfillment.Presentation
             get { return _instance; }
         }
 
-        private CustomerService _customerService;
-        private ProductService _productService;
-        private InventoryAllocationService _inventoryAllocationService;
-        private PickListService _pickListService;
         private IMessageQueue<Order> _messageQueue;
 
         private ManualResetEvent _stop =
             new ManualResetEvent(false);
         private Thread _thread;
-
-        private Random _databaseError = new Random();
 
         public OrderHandler()
         {
@@ -70,17 +64,12 @@ namespace PharmaNet.Fulfillment.Presentation
                 {
                     using (var scope = new TransactionScope())
                     {
-                        FulfillmentDB context = new FulfillmentDB();
-
-                        _customerService = new CustomerService(context.GetCustomerRepository());
-                        _productService = new ProductService(context.GetProductRepository());
-                        _inventoryAllocationService = new InventoryAllocationService(context.GetWarehouseRepository());
-                        _pickListService = new PickListService(context.GetPickListRepository());
-
-                        if (_messageQueue
-                            .TryReceive(out order))
+                        using (OrderProcessor processor = new OrderProcessor())
                         {
-                            ProcessOrder(order);
+                            if (_messageQueue.TryReceive(out order))
+                            {
+                                processor.ProcessOrder(order);
+                            }
                         }
 
                         scope.Complete();
@@ -91,42 +80,6 @@ namespace PharmaNet.Fulfillment.Presentation
                     // Retry.
                 }
             }
-        }
-
-        private void ProcessOrder(Order order)
-        {
-            if (_pickListService.GetPickLists(
-                order.OrderId).Any())
-                return;
-
-            Customer customer = _customerService
-                .GetCustomer(
-                    order.CustomerName,
-                    order.CustomerAddress);
-
-            List<OrderLine> orderLines = order.Lines
-                .Select(line => new OrderLine
-                {
-                    Customer = customer,
-                    Product = _productService
-                        .GetProduct(
-                            line.ProductNumber),
-                    Quantity = line.Quantity
-                })
-                .ToList();
-
-            List<PickList> pickLists =
-                _inventoryAllocationService
-                    .AllocateInventory(
-                        order.OrderId,
-                        orderLines);
-
-            if (_databaseError.Next(100) < 20)
-            {
-                throw new ApplicationException("Database error");
-            }
-
-            _pickListService.SavePickLists(pickLists);
         }
     }
 }
