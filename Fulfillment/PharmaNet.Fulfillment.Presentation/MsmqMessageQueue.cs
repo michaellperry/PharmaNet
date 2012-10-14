@@ -37,18 +37,11 @@ namespace PharmaNet.Fulfillment.Presentation
             _queue = new MessageQueue(path);
             _queue.DefaultPropertiesToSend
                 .Recoverable = true;
-            _queue.Formatter = new XmlMessageFormatter(new Type[] { typeof(T) });
         }
 
         public void Send(T message)
         {
-            using (var scope = new TransactionScope(
-                TransactionScopeOption.RequiresNew,
-                new TransactionOptions()
-                {
-                    IsolationLevel = IsolationLevel.ReadCommitted
-                }
-            ))
+            using (var scope = new TransactionScope())
             {
                 _queue.Send(message,
                     MessageQueueTransactionType.Automatic);
@@ -60,7 +53,6 @@ namespace PharmaNet.Fulfillment.Presentation
         {
             try
             {
-                Debug.WriteLine("Messages in queue: {0}.", _queue.GetAllMessages().Length);
                 message = (T)_queue.Receive(Timeout,
                     MessageQueueTransactionType.Automatic)
                     .Body;

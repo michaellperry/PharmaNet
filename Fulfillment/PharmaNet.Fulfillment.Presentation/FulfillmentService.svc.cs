@@ -7,6 +7,7 @@ using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Fulfillment.SQL;
 using System.Transactions;
 using System.ServiceModel;
+using System.Diagnostics;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
@@ -38,6 +39,8 @@ namespace PharmaNet.Fulfillment.Presentation
 
             _messageQueue = MsmqMessageQueue<Order>
                 .Instance;
+
+            OrderHandler.Instance.Start();
         }
 
         public void PlaceOrder(Order order)

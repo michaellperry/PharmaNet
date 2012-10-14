@@ -68,13 +68,7 @@ namespace PharmaNet.Fulfillment.Presentation
             {
                 try
                 {
-                    using (var scope = new TransactionScope(
-                        TransactionScopeOption.RequiresNew,
-                        new TransactionOptions()
-                        {
-                            IsolationLevel = IsolationLevel.ReadCommitted
-                        }
-                    ))
+                    using (var scope = new TransactionScope())
                     {
                         FulfillmentDB context = new FulfillmentDB();
 
@@ -86,7 +80,6 @@ namespace PharmaNet.Fulfillment.Presentation
                         if (_messageQueue
                             .TryReceive(out order))
                         {
-                            Debug.WriteLine(String.Format("Received order {0}.", order.OrderId));
                             ProcessOrder(order);
                         }
 
@@ -130,7 +123,6 @@ namespace PharmaNet.Fulfillment.Presentation
 
             if (_databaseError.Next(100) < 20)
             {
-                Debug.WriteLine("Simulating error.");
                 throw new ApplicationException("Database error");
             }
 

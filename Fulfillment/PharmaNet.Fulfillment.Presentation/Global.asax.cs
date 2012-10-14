@@ -18,8 +18,6 @@ namespace PharmaNet.Fulfillment.Presentation
             FulfillmentDB context = new FulfillmentDB();
             var product = EnsureProduct(context);
             EnsureWarehouse(context, product);
-
-            OrderHandler.Instance.Start();
         }
 
         private static Domain.Product EnsureProduct(FulfillmentDB context)
