@@ -6,6 +6,7 @@ using PharmaNet.Fulfillment.Application;
 using PharmaNet.Fulfillment.Contract;
 using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Fulfillment.SQL;
+using System.Transactions;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
@@ -35,10 +36,6 @@ namespace PharmaNet.Fulfillment.Presentation
 
         public void ProcessOrder(Order order)
         {
-            if (_pickListService.GetPickLists(
-                order.OrderId).Any())
-                return;
-
             Customer customer = _customerService
                 .GetCustomer(
                     order.CustomerName,
@@ -60,11 +57,6 @@ namespace PharmaNet.Fulfillment.Presentation
                     .AllocateInventory(
                         order.OrderId,
                         orderLines);
-
-            if (_databaseError.Next(100) < 20)
-            {
-                throw new ApplicationException("Database error");
-            }
 
             _pickListService.SavePickLists(pickLists);
         }
