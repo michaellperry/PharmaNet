@@ -7,9 +7,11 @@ namespace PharmaNet.Fulfillment.Contract
     public interface IFulfillmentService
     {
         [OperationContract]
+        [FaultContract(typeof(FulfillmentNetworkError))]
         void PlaceOrder(Order composite);
 
         [OperationContract]
+        [FaultContract(typeof(FulfillmentNetworkError))]
         Confirmation CheckOrderStatus(Guid orderId);
     }
 }

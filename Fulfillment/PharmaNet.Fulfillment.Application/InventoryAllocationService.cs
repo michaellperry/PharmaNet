@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Infrastructure.Repository;
+using System.Diagnostics;
 
 namespace PharmaNet.Fulfillment.Application
 {
@@ -64,6 +65,7 @@ namespace PharmaNet.Fulfillment.Application
 
             inventory.QuantityOnHand =
                 inventory.QuantityOnHand - quantity;
+            Debug.WriteLine("Quantity on hand: {0}.", inventory.QuantityOnHand);
             _warehouseRepository.SaveChanges();
 
             return new PickList

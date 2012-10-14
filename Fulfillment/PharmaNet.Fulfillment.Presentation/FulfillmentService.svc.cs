@@ -6,6 +6,7 @@ using PharmaNet.Fulfillment.Contract;
 using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Fulfillment.SQL;
 using System.Transactions;
+using System.ServiceModel;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
@@ -17,6 +18,8 @@ namespace PharmaNet.Fulfillment.Presentation
         private PickListService _pickListService;
 
         private IMessageQueue<Order> _messageQueue;
+
+        private Random _networkError = new Random();
 
         public FulfillmentService()
         {
@@ -33,14 +36,18 @@ namespace PharmaNet.Fulfillment.Presentation
             _pickListService = new PickListService(
                 context.GetPickListRepository());
 
-            _messageQueue = MemoryMessageQueue<Order>.Instance;
-
-            OrderHandler.Instance.Start();
+            _messageQueue = MsmqMessageQueue<Order>
+                .Instance;
         }
 
         public void PlaceOrder(Order order)
         {
             _messageQueue.Send(order);
+
+            if (_networkError.Next(100) < 20)
+                throw new FaultException<FulfillmentNetworkError>(
+                    new FulfillmentNetworkError(),
+                    "Network error");
         }
 
         public Confirmation CheckOrderStatus(Guid orderId)

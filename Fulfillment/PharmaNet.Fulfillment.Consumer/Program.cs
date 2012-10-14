@@ -24,49 +24,76 @@ namespace PharmaNet.Fulfillment.Consumer
                     new Line
                     {
                         ProductNumber = 11190,
-                        Quantity = 2
+                        Quantity = 1
                     }
                 }
             };
 
-            while (true)
+            for (int i = 0; i < 100; ++i)
             {
-                try
-                {
-                    order.OrderId = Guid.NewGuid();
-                    PlaceOrder(client, order);
-                    orderIds.Add(order.OrderId);
+                Console.WriteLine("Place order {0}.", i);
 
-                    var processedOrderIds = orderIds
-                        .Where(id => CheckOrderStatus(
-                            client, id))
-                        .ToList();
-                    orderIds.RemoveAll(id =>
-                        processedOrderIds.Contains(id));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
+                order.OrderId = Guid.NewGuid();
+                PlaceOrder(client, order);
+                orderIds.Add(order.OrderId);
+
+                CheckPendingOrders(client, orderIds);
             }
+
+            while (orderIds.Any())
+                CheckPendingOrders(client, orderIds);
+
+            Console.WriteLine("Finished");
+            Console.ReadKey();
+        }
+
+        private static void CheckPendingOrders(
+            ServiceClient<IFulfillmentService> client,
+            List<Guid> orderIds)
+        {
+            orderIds.RemoveAll(id =>
+                CheckOrderStatus(client, id));
+
+            Console.WriteLine("Pending orders: {0}.",
+                orderIds.Count);
         }
 
         private static void PlaceOrder(
             ServiceClient<IFulfillmentService> client,
             Order order)
         {
-            client.CallService(
-                "BasicHttpBinding_IFulfillmentService",
-                s => s.PlaceOrder(order));
+            while (true)
+            {
+                try
+                {
+                    client.CallService(
+                        "BasicHttpBinding_IFulfillmentService",
+                        s => s.PlaceOrder(order));
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Network error: retry.");
+                }
+            }
         }
 
         private static bool CheckOrderStatus(
             ServiceClient<IFulfillmentService> client,
             Guid orderId)
         {
-            var confirmation = client.CallService(
-                "BasicHttpBinding_IFulfillmentService",
-                s => s.CheckOrderStatus(orderId));
+            Confirmation confirmation = null;
+            try
+            {
+                confirmation = client.CallService(
+                    "BasicHttpBinding_IFulfillmentService",
+                    s => s.CheckOrderStatus(orderId));
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+                return false;
+            }
 
             if (confirmation == null)
                 return false;

@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Confirmation.cs" />
+    <Compile Include="FulfillmentNetworkError.cs" />
     <Compile Include="IFulfillmentService.cs" />
     <Compile Include="Line.cs" />
     <Compile Include="Order.cs" />
@@ -53,15 +54,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ProjectExtensions>
-    <VisualStudio>
-      <FlavorProperties GUID="{3D9AD99F-2412-4246-B90B-4EAA41C64699}">
-        <WcfProjectProperties>
-          <AutoStart>True</AutoStart>
-        </WcfProjectProperties>
-      </FlavorProperties>
-    </VisualStudio>
-  </ProjectExtensions>
+  <ProjectExtensions />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
