@@ -62,6 +62,10 @@ namespace PharmaNet.Fulfillment.Presentation
                         order.OrderId,
                         orderLines);
 
+            if (_databaseError.Next(100) < 20)
+                throw new ApplicationException(
+                    "Database error.");
+
             _pickListService.SavePickLists(pickLists);
         }
 

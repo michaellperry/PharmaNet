@@ -24,15 +24,14 @@ namespace PharmaNet.Fulfillment.Consumer
                     new Line
                     {
                         ProductNumber = 11190,
-                        Quantity = 2
+                        Quantity = 1
                     }
                 }
             };
 
-            //for (int i = 0; i < 100; ++i)
-            while (true)
+            for (int i = 0; i < 100; ++i)
             {
-                //Console.WriteLine("Place order {0}.", i);
+                Console.WriteLine("Place order {0}.", i);
 
                 order.OrderId = Guid.NewGuid();
                 PlaceOrder(client, order);
@@ -55,8 +54,8 @@ namespace PharmaNet.Fulfillment.Consumer
             orderIds.RemoveAll(id =>
                 CheckOrderStatus(client, id));
 
-            //Console.WriteLine("Pending orders: {0}.",
-            //    orderIds.Count);
+            Console.WriteLine("Pending orders: {0}.",
+                orderIds.Count);
         }
 
         private static void PlaceOrder(

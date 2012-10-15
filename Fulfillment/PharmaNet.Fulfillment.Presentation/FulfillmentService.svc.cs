@@ -46,6 +46,11 @@ namespace PharmaNet.Fulfillment.Presentation
         public void PlaceOrder(Order order)
         {
             _messageQueue.Send(order);
+
+            if (_networkError.Next(100) < 20)
+                throw new FaultException<FulfillmentNetworkError>(
+                    new FulfillmentNetworkError(),
+                    "Network error.");
         }
 
         public Confirmation CheckOrderStatus(Guid orderId)
