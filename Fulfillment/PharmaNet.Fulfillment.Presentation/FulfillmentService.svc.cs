@@ -37,7 +37,7 @@ namespace PharmaNet.Fulfillment.Presentation
             _pickListService = new PickListService(
                 context.GetPickListRepository());
 
-            _messageQueue = MemoryMessageQueue<Order>
+            _messageQueue = MsmqMessageQueue<Order>
                 .Instance;
 
             OrderHandler.Instance.Start();

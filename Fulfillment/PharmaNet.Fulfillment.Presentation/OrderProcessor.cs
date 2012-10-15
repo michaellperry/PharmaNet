@@ -36,6 +36,10 @@ namespace PharmaNet.Fulfillment.Presentation
 
         public void ProcessOrder(Order order)
         {
+            if (_pickListService.GetPickLists(order.OrderId)
+                .Any())
+                return;
+
             Customer customer = _customerService
                 .GetCustomer(
                     order.CustomerName,

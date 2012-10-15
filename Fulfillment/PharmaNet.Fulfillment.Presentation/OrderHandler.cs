@@ -33,7 +33,7 @@ namespace PharmaNet.Fulfillment.Presentation
             // TODO: Inject these dependencies.
             FulfillmentDB.Initialize();
 
-            _messageQueue = MemoryMessageQueue<Order>
+            _messageQueue = MsmqMessageQueue<Order>
                 .Instance;
 
             _thread = new Thread(ThreadProc);
@@ -62,15 +62,15 @@ namespace PharmaNet.Fulfillment.Presentation
             {
                 try
                 {
-                    if (_messageQueue.TryReceive(out order))
+                    using (var scope = new TransactionScope(
+                        TransactionScopeOption.RequiresNew,
+                        new TransactionOptions
+                        {
+                            IsolationLevel = IsolationLevel
+                                .ReadCommitted
+                        }))
                     {
-                        using (var scope = new TransactionScope(
-                            TransactionScopeOption.RequiresNew,
-                            new TransactionOptions
-                            {
-                                IsolationLevel = IsolationLevel
-                                    .ReadCommitted
-                            }))
+                        if (_messageQueue.TryReceive(out order))
                         {
                             using (OrderProcessor processor =
                                 new OrderProcessor())
