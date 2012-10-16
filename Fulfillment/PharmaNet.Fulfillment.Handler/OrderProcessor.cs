@@ -26,8 +26,6 @@ namespace PharmaNet.Fulfillment.Handler
         public OrderProcessor()
         {
             // TODO: Inject these dependencies.
-            FulfillmentDB.Initialize();
-
             _messageQueue = new MsmqMessageQueueInbound<Order>();
 
             _thread = new Thread(ThreadProc);
