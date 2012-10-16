@@ -9,6 +9,7 @@ using PharmaNet.Fulfillment.SQL;
 using PharmaNet.Fulfillment.Contract;
 using System.Transactions;
 using System.Diagnostics;
+using PharmaNet.Infrastructure.Messaging;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
@@ -22,7 +23,7 @@ namespace PharmaNet.Fulfillment.Presentation
             get { return _instance; }
         }
 
-        private IMessageQueue<Order> _messageQueue;
+        private IMessageQueueInbound<Order> _messageQueue;
 
         private ManualResetEvent _stop =
             new ManualResetEvent(false);
@@ -33,8 +34,7 @@ namespace PharmaNet.Fulfillment.Presentation
             // TODO: Inject these dependencies.
             FulfillmentDB.Initialize();
 
-            _messageQueue = MsmqMessageQueue<Order>
-                .Instance;
+            _messageQueue = new MsmqMessageQueueInbound<Order>();
 
             _thread = new Thread(ThreadProc);
             _thread.Name = "OrderHandler";

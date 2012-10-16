@@ -2,11 +2,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 
-namespace PharmaNet.Fulfillment.Presentation
+namespace PharmaNet.Infrastructure.Messaging
 {
-    public interface IMessageQueue<T>
+    public interface IMessageQueueInbound<T>
     {
-        void Send(T message);
         bool TryReceive(out T message);
     }
 }

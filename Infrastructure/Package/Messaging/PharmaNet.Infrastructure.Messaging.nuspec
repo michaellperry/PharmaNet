@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>PharmaNet.Infrastructure.Messaging</id>
+    <version>1.0.1</version>
+    <authors>Michael L Perry</authors>
+    <owners>Michael L Perry</owners>
+    <projectUrl>http://github.com/michaellperry/PharmaNet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Internal package for PharmaNet developers.</description>
+    <copyright>Copyright 2012 PharmaNet</copyright>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>

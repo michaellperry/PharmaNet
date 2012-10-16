@@ -1,6 +1,6 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 11.00
-# Visual Studio 2010
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Domain", "PharmaNet.Fulfillment.Domain\PharmaNet.Fulfillment.Domain.csproj", "{7E112EA0-15B1-426B-8BBC-FADF5234278B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Application", "PharmaNet.Fulfillment.Application\PharmaNet.Fulfillment.Application.csproj", "{FEB932F4-3E7D-49C3-A434-E96515DC4236}"
@@ -28,6 +28,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{94DC6E
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Handler", "PharmaNet.Fulfillment.Handler\PharmaNet.Fulfillment.Handler.csproj", "{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}"
 EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
@@ -112,6 +114,16 @@ Global
 		{22136F3C-A65A-4DAD-8738-942742276CCB}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{22136F3C-A65A-4DAD-8738-942742276CCB}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{22136F3C-A65A-4DAD-8738-942742276CCB}.Release|x86.ActiveCfg = Release|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{4FC5E7D7-825D-4ACE-8846-BFD016A39B42}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,9 +2,9 @@ using System;
 using System.Messaging;
 using System.Transactions;
 
-namespace PharmaNet.Fulfillment.Presentation
+namespace PharmaNet.Infrastructure.Messaging
 {
-    public class MsmqMessageQueue<T> : IMessageQueue<T>
+    public class MsmqMessageQueueInbound<T> : IMessageQueueInbound<T>
     {
         private static readonly TimeSpan Timeout =
             TimeSpan.FromSeconds(30.0);
@@ -12,17 +12,9 @@ namespace PharmaNet.Fulfillment.Presentation
             new XmlMessageFormatter(
                 new Type[] { typeof(T) });
 
-        private static MsmqMessageQueue<T> _instance =
-            new MsmqMessageQueue<T>();
-
         private string _path;
 
-        public static IMessageQueue<T> Instance
-        {
-            get { return _instance; }
-        }
-
-        public MsmqMessageQueue()
+        public MsmqMessageQueueInbound()
         {
             _path = @".\private$\" +
                 typeof(T).FullName;
@@ -30,22 +22,6 @@ namespace PharmaNet.Fulfillment.Presentation
             {
                 MessageQueue.Create(_path,
                     transactional: true);
-            }
-        }
-
-        public void Send(T message)
-        {
-            using (var scope = new TransactionScope())
-            {
-                using (var queue = new MessageQueue(_path))
-                {
-                    queue.DefaultPropertiesToSend
-                        .Recoverable = true;
-                    queue.Formatter = Formatter;
-                    queue.Send(message,
-                        MessageQueueTransactionType.Automatic);
-                }
-                scope.Complete();
             }
         }
 

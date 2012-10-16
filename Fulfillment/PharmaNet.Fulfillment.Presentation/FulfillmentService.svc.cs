@@ -8,6 +8,7 @@ using PharmaNet.Fulfillment.SQL;
 using System.Transactions;
 using System.ServiceModel;
 using System.Diagnostics;
+using PharmaNet.Infrastructure.Messaging;
 
 namespace PharmaNet.Fulfillment.Presentation
 {
@@ -18,7 +19,7 @@ namespace PharmaNet.Fulfillment.Presentation
         private InventoryAllocationService _inventoryAllocationService;
         private PickListService _pickListService;
 
-        private IMessageQueue<Order> _messageQueue;
+        private IMessageQueueOutbound<Order> _messageQueue;
 
         private Random _networkError = new Random();
 
@@ -37,8 +38,7 @@ namespace PharmaNet.Fulfillment.Presentation
             _pickListService = new PickListService(
                 context.GetPickListRepository());
 
-            _messageQueue = MsmqMessageQueue<Order>
-                .Instance;
+            _messageQueue = new MsmqMessageQueueOutbound<Order>(".");
 
             OrderHandler.Instance.Start();
         }
