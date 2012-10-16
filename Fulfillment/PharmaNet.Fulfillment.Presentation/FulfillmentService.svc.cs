@@ -39,8 +39,6 @@ namespace PharmaNet.Fulfillment.Presentation
                 context.GetPickListRepository());
 
             _messageQueue = new MsmqMessageQueueOutbound<Order>(".");
-
-            OrderHandler.Instance.Start();
         }
 
         public void PlaceOrder(Order order)

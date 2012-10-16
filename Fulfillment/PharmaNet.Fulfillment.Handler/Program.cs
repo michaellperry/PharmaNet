@@ -10,6 +10,15 @@ namespace PharmaNet.Fulfillment.Handler
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Starting order processor...");
+
+            OrderProcessor orderProcessor =
+                new OrderProcessor();
+            orderProcessor.Start();
+
+            Console.ReadKey();
+
+            orderProcessor.Stop();
         }
     }
 }

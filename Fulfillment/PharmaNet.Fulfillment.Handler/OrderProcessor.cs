@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Threading;
-using PharmaNet.Fulfillment.Domain;
-using PharmaNet.Fulfillment.Application;
+﻿using PharmaNet.Fulfillment.Contract;
 using PharmaNet.Fulfillment.SQL;
-using PharmaNet.Fulfillment.Contract;
-using System.Transactions;
-using System.Diagnostics;
 using PharmaNet.Infrastructure.Messaging;
+using System;
+using System.Threading;
+using System.Transactions;
 
-namespace PharmaNet.Fulfillment.Presentation
+namespace PharmaNet.Fulfillment.Handler
 {
-    public class OrderHandler
+    public class OrderProcessor
     {
-        private static OrderHandler _instance =
-            new OrderHandler();
+        private static OrderProcessor _instance =
+            new OrderProcessor();
 
-        public static OrderHandler Instance
+        public static OrderProcessor Instance
         {
             get { return _instance; }
         }
@@ -29,7 +23,7 @@ namespace PharmaNet.Fulfillment.Presentation
             new ManualResetEvent(false);
         private Thread _thread;
 
-        public OrderHandler()
+        public OrderProcessor()
         {
             // TODO: Inject these dependencies.
             FulfillmentDB.Initialize();
@@ -37,7 +31,7 @@ namespace PharmaNet.Fulfillment.Presentation
             _messageQueue = new MsmqMessageQueueInbound<Order>();
 
             _thread = new Thread(ThreadProc);
-            _thread.Name = "OrderHandler";
+            _thread.Name = "OrderProcessor";
         }
 
         public void Start()
@@ -72,10 +66,11 @@ namespace PharmaNet.Fulfillment.Presentation
                     {
                         if (_messageQueue.TryReceive(out order))
                         {
-                            using (OrderProcessor processor =
-                                new OrderProcessor())
+                            using (OrderHandler handler =
+                                new OrderHandler())
                             {
-                                processor.ProcessOrder(order);
+                                Console.WriteLine("Handle order.");
+                                handler.HandleOrder(order);
                             }
 
                             scope.Complete();
@@ -85,6 +80,7 @@ namespace PharmaNet.Fulfillment.Presentation
                 catch (Exception ex)
                 {
                     // Retry.
+                    Console.WriteLine("Retry.");
                 }
             }
         }

@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using PharmaNet.Fulfillment.Application;
 using PharmaNet.Fulfillment.Contract;
 using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Fulfillment.SQL;
-using System.Transactions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
-namespace PharmaNet.Fulfillment.Presentation
+namespace PharmaNet.Fulfillment.Handler
 {
-    public class OrderProcessor : IDisposable
+    public class OrderHandler : IDisposable
     {
         private FulfillmentDB _context;
         private CustomerService _customerService;
@@ -20,7 +18,7 @@ namespace PharmaNet.Fulfillment.Presentation
 
         private Random _databaseError = new Random();
 
-        public OrderProcessor()
+        public OrderHandler()
         {
             _context = new FulfillmentDB();
 
@@ -34,7 +32,7 @@ namespace PharmaNet.Fulfillment.Presentation
                 _context.GetPickListRepository());
         }
 
-        public void ProcessOrder(Order order)
+        public void HandleOrder(Order order)
         {
             if (_pickListService.GetPickLists(order.OrderId)
                 .Any())

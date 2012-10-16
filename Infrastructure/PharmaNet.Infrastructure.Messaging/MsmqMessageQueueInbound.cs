@@ -7,7 +7,7 @@ namespace PharmaNet.Infrastructure.Messaging
     public class MsmqMessageQueueInbound<T> : IMessageQueueInbound<T>
     {
         private static readonly TimeSpan Timeout =
-            TimeSpan.FromSeconds(30.0);
+            TimeSpan.FromSeconds(5.0);
         private XmlMessageFormatter Formatter =
             new XmlMessageFormatter(
                 new Type[] { typeof(T) });
