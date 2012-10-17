@@ -7,5 +7,7 @@ namespace PharmaNet.Fulfillment.Messages
 {
     public class Line
     {
+        public int ProductNumber { get; set; }
+        public int Quantity { get; set; }
     }
 }
