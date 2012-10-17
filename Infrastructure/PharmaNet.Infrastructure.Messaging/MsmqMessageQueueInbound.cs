@@ -4,7 +4,8 @@ using System.Transactions;
 
 namespace PharmaNet.Infrastructure.Messaging
 {
-    public class MsmqMessageQueueInbound<T> : IMessageQueueInbound<T>
+    public class MsmqMessageQueueInbound<T> :
+        IMessageQueueInbound<T>
     {
         private static readonly TimeSpan Timeout =
             TimeSpan.FromSeconds(5.0);

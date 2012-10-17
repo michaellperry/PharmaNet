@@ -4,7 +4,8 @@ using System.Transactions;
 
 namespace PharmaNet.Infrastructure.Messaging
 {
-    public class MsmqMessageQueueOutbound<T> : IMessageQueueOutbound<T>
+    public class MsmqMessageQueueOutbound<T> :
+        IMessageQueueOutbound<T>
     {
         private XmlMessageFormatter Formatter =
             new XmlMessageFormatter(
