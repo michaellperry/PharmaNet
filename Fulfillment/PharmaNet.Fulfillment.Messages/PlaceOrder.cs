@@ -7,9 +7,5 @@ namespace PharmaNet.Fulfillment.Messages
 {
     public class PlaceOrder
     {
-        public Guid OrderId { get; set; }
-        public string CustomerName { get; set; }
-        public string CustomerAddress { get; set; }
-        public List<Line> Lines { get; set; }
     }
 }

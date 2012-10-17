@@ -19,7 +19,7 @@ namespace PharmaNet.Fulfillment.Presentation
         private InventoryAllocationService _inventoryAllocationService;
         private PickListService _pickListService;
 
-        private IMessageQueueOutbound<Messages.PlaceOrder>
+        private IMessageQueueOutbound<Contract.Order>
             _messageQueue;
 
         private Random _networkError = new Random();
@@ -39,25 +39,28 @@ namespace PharmaNet.Fulfillment.Presentation
             _pickListService = new PickListService(
                 context.GetPickListRepository());
 
+            OrderProcessor.Instance.Start();
+
             _messageQueue = new MsmqMessageQueueOutbound<
-                Messages.PlaceOrder>(".");
+                Contract.Order>(".");
         }
 
         public void PlaceOrder(Order order)
         {
-            _messageQueue.Send(new Messages.PlaceOrder
-            {
-                OrderId = order.OrderId,
-                CustomerName = order.CustomerName,
-                CustomerAddress = order.CustomerAddress,
-                Lines = order.Lines.Select(l =>
-                    new Messages.Line
-                    {
-                        ProductNumber = l.ProductNumber,
-                        Quantity = l.Quantity
-                    })
-                    .ToList()
-            });
+            _messageQueue.Send(order);
+            //_messageQueue.Send(new Messages.PlaceOrder
+            //{
+            //    OrderId = order.OrderId,
+            //    CustomerName = order.CustomerName,
+            //    CustomerAddress = order.CustomerAddress,
+            //    Lines = order.Lines.Select(l =>
+            //        new Messages.Line
+            //        {
+            //            ProductNumber = l.ProductNumber,
+            //            Quantity = l.Quantity
+            //        })
+            //        .ToList()
+            //});
 
             if (_networkError.Next(100) < 20)
                 throw new FaultException<FulfillmentNetworkError>(
