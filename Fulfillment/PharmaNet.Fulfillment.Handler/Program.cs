@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using PharmaNet.Fulfillment.SQL;
+using PharmaNet.Fulfillment.Messages;
 
 namespace PharmaNet.Fulfillment.Handler
 {
@@ -18,8 +19,9 @@ namespace PharmaNet.Fulfillment.Handler
 
             Console.WriteLine("Starting order processor...");
 
-            OrderProcessor orderProcessor =
-                new OrderProcessor();
+            MessageProcessor<PlaceOrder> orderProcessor =
+                new MessageProcessor<PlaceOrder>(
+                    () => new PlaceOrderHandler());
             orderProcessor.Start();
 
             Console.ReadKey();

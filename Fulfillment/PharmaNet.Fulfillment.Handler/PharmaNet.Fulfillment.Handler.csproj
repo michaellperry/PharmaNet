@@ -59,8 +59,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="OrderProcessor.cs" />
-    <Compile Include="OrderHandler.cs" />
+    <Compile Include="IMessageHandler.cs" />
+    <Compile Include="MessageProcessor.cs" />
+    <Compile Include="PlaceOrderHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -73,13 +74,13 @@
       <Project>{feb932f4-3e7d-49c3-a434-e96515dc4236}</Project>
       <Name>PharmaNet.Fulfillment.Application</Name>
     </ProjectReference>
-    <ProjectReference Include="..\PharmaNet.Fulfillment.Contract\PharmaNet.Fulfillment.Contract.csproj">
-      <Project>{0a0d84b5-b543-4765-81fb-7751a7845430}</Project>
-      <Name>PharmaNet.Fulfillment.Contract</Name>
-    </ProjectReference>
     <ProjectReference Include="..\PharmaNet.Fulfillment.Domain\PharmaNet.Fulfillment.Domain.csproj">
       <Project>{7e112ea0-15b1-426b-8bbc-fadf5234278b}</Project>
       <Name>PharmaNet.Fulfillment.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\PharmaNet.Fulfillment.Messages\PharmaNet.Fulfillment.Messages.csproj">
+      <Project>{1CD80D18-92D9-4395-9FAA-440D70D571AE}</Project>
+      <Name>PharmaNet.Fulfillment.Messages</Name>
     </ProjectReference>
     <ProjectReference Include="..\PharmaNet.Fulfillment.SQL\PharmaNet.Fulfillment.SQL.csproj">
       <Project>{1d31bb1f-1b2b-4e40-b9e5-548d0fa3cb7a}</Project>

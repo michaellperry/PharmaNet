@@ -1,35 +1,27 @@
-﻿using PharmaNet.Fulfillment.Contract;
-using PharmaNet.Fulfillment.SQL;
-using PharmaNet.Infrastructure.Messaging;
-using System;
+﻿using System;
 using System.Threading;
 using System.Transactions;
+using PharmaNet.Infrastructure.Messaging;
 
 namespace PharmaNet.Fulfillment.Handler
 {
-    public class OrderProcessor
+    public class MessageProcessor<T>
     {
-        private static OrderProcessor _instance =
-            new OrderProcessor();
-
-        public static OrderProcessor Instance
-        {
-            get { return _instance; }
-        }
-
-        private IMessageQueueInbound<Order> _messageQueue;
+        private Func<IMessageHandler<T>> _factory;
+        private IMessageQueueInbound<T> _messageQueue;
 
         private ManualResetEvent _stop =
             new ManualResetEvent(false);
         private Thread _thread;
 
-        public OrderProcessor()
+        public MessageProcessor(Func<IMessageHandler<T>> factory)
         {
-            // TODO: Inject these dependencies.
-            _messageQueue = new MsmqMessageQueueInbound<Order>();
+            _factory = factory;
+            _messageQueue =
+                new MsmqMessageQueueInbound<T>();
 
             _thread = new Thread(ThreadProc);
-            _thread.Name = "OrderProcessor";
+            _thread.Name = GetType().FullName;
         }
 
         public void Start()
@@ -49,7 +41,7 @@ namespace PharmaNet.Fulfillment.Handler
 
         private void ThreadProc(object o)
         {
-            Order order;
+            T message;
             while (!_stop.WaitOne(0))
             {
                 try
@@ -62,13 +54,13 @@ namespace PharmaNet.Fulfillment.Handler
                                 .ReadCommitted
                         }))
                     {
-                        if (_messageQueue.TryReceive(out order))
+                        if (_messageQueue.TryReceive(out message))
                         {
-                            using (OrderHandler handler =
-                                new OrderHandler())
+                            using (IMessageHandler<T> handler =
+                                _factory())
                             {
-                                Console.WriteLine("Handle order.");
-                                handler.HandleOrder(order);
+                                Console.WriteLine("Handle message.");
+                                handler.HandleMessage(message);
                             }
 
                             scope.Complete();

@@ -1,14 +1,14 @@
-using PharmaNet.Fulfillment.Application;
-using PharmaNet.Fulfillment.Contract;
-using PharmaNet.Fulfillment.Domain;
-using PharmaNet.Fulfillment.SQL;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PharmaNet.Fulfillment.Application;
+using PharmaNet.Fulfillment.Domain;
+using PharmaNet.Fulfillment.Messages;
+using PharmaNet.Fulfillment.SQL;
 
 namespace PharmaNet.Fulfillment.Handler
 {
-    public class OrderHandler : IDisposable
+    public class PlaceOrderHandler : IMessageHandler<PlaceOrder>
     {
         private FulfillmentDB _context;
         private CustomerService _customerService;
@@ -18,7 +18,7 @@ namespace PharmaNet.Fulfillment.Handler
 
         private Random _databaseError = new Random();
 
-        public OrderHandler()
+        public PlaceOrderHandler()
         {
             _context = new FulfillmentDB();
 
@@ -32,18 +32,18 @@ namespace PharmaNet.Fulfillment.Handler
                 _context.GetPickListRepository());
         }
 
-        public void HandleOrder(Order order)
+        public void HandleMessage(PlaceOrder message)
         {
-            if (_pickListService.GetPickLists(order.OrderId)
+            if (_pickListService.GetPickLists(message.OrderId)
                 .Any())
                 return;
 
             Customer customer = _customerService
                 .GetCustomer(
-                    order.CustomerName,
-                    order.CustomerAddress);
+                    message.CustomerName,
+                    message.CustomerAddress);
 
-            List<OrderLine> orderLines = order.Lines
+            List<OrderLine> orderLines = message.Lines
                 .Select(line => new OrderLine
                 {
                     Customer = customer,
@@ -57,7 +57,7 @@ namespace PharmaNet.Fulfillment.Handler
             List<PickList> pickLists =
                 _inventoryAllocationService
                     .AllocateInventory(
-                        order.OrderId,
+                        message.OrderId,
                         orderLines);
 
             if (_databaseError.Next(100) < 20)

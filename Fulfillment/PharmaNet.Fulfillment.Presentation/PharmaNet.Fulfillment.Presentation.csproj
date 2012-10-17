@@ -114,6 +114,10 @@
       <Project>{7E112EA0-15B1-426B-8BBC-FADF5234278B}</Project>
       <Name>PharmaNet.Fulfillment.Domain</Name>
     </ProjectReference>
+    <ProjectReference Include="..\PharmaNet.Fulfillment.Messages\PharmaNet.Fulfillment.Messages.csproj">
+      <Project>{1CD80D18-92D9-4395-9FAA-440D70D571AE}</Project>
+      <Name>PharmaNet.Fulfillment.Messages</Name>
+    </ProjectReference>
     <ProjectReference Include="..\PharmaNet.Fulfillment.SQL\PharmaNet.Fulfillment.SQL.csproj">
       <Project>{1D31BB1F-1B2B-4E40-B9E5-548D0FA3CB7A}</Project>
       <Name>PharmaNet.Fulfillment.SQL</Name>
