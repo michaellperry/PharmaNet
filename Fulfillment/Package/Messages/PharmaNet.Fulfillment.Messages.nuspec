@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>PharmaNet.Fulfillment.Messages</id>
+    <version>1.0.0</version>
+    <authors>Michael L Perry</authors>
+    <owners>Michael L Perry</owners>
+    <projectUrl>http://github.com/MichaelLPerry/PharmaNet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Messages for the Fulfillment service.</description>
+    <copyright>Copyright 2012</copyright>
+    <dependencies>
+    </dependencies>
+  </metadata>
+</package>

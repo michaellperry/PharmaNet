@@ -33,6 +33,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Handl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Fulfillment.Messages", "PharmaNet.Fulfillment.Messages\PharmaNet.Fulfillment.Messages.csproj", "{1CD80D18-92D9-4395-9FAA-440D70D571AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Package", "Package", "{69A0F329-9EC0-4A33-9374-AFB44EBE1907}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messages", "Messages", "{B63A6265-857A-454A-ABCB-EC274D4CDF31}"
+	ProjectSection(SolutionItems) = preProject
+		Package\Messages\PharmaNet.Fulfillment.Messages.nuspec = Package\Messages\PharmaNet.Fulfillment.Messages.nuspec
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = Fulfillment.vsmdi
@@ -139,5 +146,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B63A6265-857A-454A-ABCB-EC274D4CDF31} = {69A0F329-9EC0-4A33-9374-AFB44EBE1907}
 	EndGlobalSection
 EndGlobal

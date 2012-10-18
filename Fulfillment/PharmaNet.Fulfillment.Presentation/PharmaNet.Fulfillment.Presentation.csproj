@@ -49,9 +49,9 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="PharmaNet.Infrastructure.Messaging, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PharmaNet.Infrastructure.Messaging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PharmaNet.Infrastructure.Messaging.1.0.3\lib\net40\PharmaNet.Infrastructure.Messaging.dll</HintPath>
+      <HintPath>..\packages\PharmaNet.Infrastructure.Messaging.1.0.4\lib\net40\PharmaNet.Infrastructure.Messaging.dll</HintPath>
     </Reference>
     <Reference Include="PharmaNet.Infrastructure.Repository, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\PharmaNet.Infrastructure.Repository.1.0.3\lib\net40\PharmaNet.Infrastructure.Repository.dll</HintPath>

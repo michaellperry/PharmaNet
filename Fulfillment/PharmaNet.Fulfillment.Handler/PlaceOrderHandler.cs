@@ -17,10 +17,13 @@ namespace PharmaNet.Fulfillment.Handler
         private ProductService _productService;
         private InventoryAllocationService _inventoryAllocationService;
         private PickListService _pickListService;
+        private List<IMessageQueueOutbound<OrderShipped>>
+            _subscribers;
 
         private Random _databaseError = new Random();
 
-        public PlaceOrderHandler()
+        public PlaceOrderHandler(List<IMessageQueueOutbound<OrderShipped>>
+            subscribers)
         {
             _context = new FulfillmentDB();
 
@@ -32,6 +35,8 @@ namespace PharmaNet.Fulfillment.Handler
                 _context.GetWarehouseRepository());
             _pickListService = new PickListService(
                 _context.GetPickListRepository());
+
+            _subscribers = subscribers;
         }
 
         public void HandleMessage(PlaceOrder message)
@@ -40,6 +45,7 @@ namespace PharmaNet.Fulfillment.Handler
                 .Any())
                 return;
 
+            Console.WriteLine("Place order.");
             Customer customer = _customerService
                 .GetCustomer(
                     message.CustomerName,
@@ -63,10 +69,32 @@ namespace PharmaNet.Fulfillment.Handler
                         orderLines);
 
             if (_databaseError.Next(100) < 20)
+            {
                 throw new ApplicationException(
                     "Database error.");
+                Console.WriteLine("Database error: retry.");
+            }
 
             _pickListService.SavePickLists(pickLists);
+
+            var orderShippedEvent = new OrderShipped
+            {
+                OrderId = message.OrderId,
+                CustomerName = message.CustomerName,
+                CustomerAddress = message.CustomerAddress,
+                Shipments = pickLists
+                    .Select(p => new Shipment
+                    {
+                        ProductId = p.Product.ProductId,
+                        Quantity = p.Quantity,
+                        TrackingNumber = "123-45"
+                    })
+                    .ToList()
+            };
+            foreach (var subscriber in _subscribers)
+            {
+                subscriber.Send(orderShippedEvent);
+            }
         }
 
         public void Dispose()

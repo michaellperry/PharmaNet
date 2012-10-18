@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>PharmaNet.Infrastructure.Messaging</id>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <authors>Michael L Perry</authors>
     <owners>Michael L Perry</owners>
     <projectUrl>http://github.com/michaellperry/PharmaNet</projectUrl>

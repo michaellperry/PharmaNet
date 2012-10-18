@@ -14,12 +14,14 @@ namespace PharmaNet.Infrastructure.Messaging
             new ManualResetEvent(false);
         private Thread _thread;
 
-        public MessageProcessor(Func<IMessageHandler<T>> factory)
+        public MessageProcessor(
+            string queueName,
+            Func<IMessageHandler<T>> factory)
         {
             _factory = factory;
             _messageQueue =
                 new MsmqMessageQueueInbound<T>(
-                    typeof(T).FullName);
+                    queueName);
 
             _thread = new Thread(ThreadProc);
             _thread.Name = GetType().FullName;
