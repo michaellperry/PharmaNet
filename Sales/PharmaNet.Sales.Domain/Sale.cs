@@ -7,8 +7,9 @@ namespace PharmaNet.Sales.Domain
 {
     public class Sale
     {
-        public Product Product { get; set; }
-        public DateTime Date { get; set; }
-        public int Units { get; set; }
+        public virtual int Id { get; set; }
+        public virtual Product Product { get; set; }
+        public virtual DateTime Date { get; set; }
+        public virtual int Units { get; set; }
     }
 }

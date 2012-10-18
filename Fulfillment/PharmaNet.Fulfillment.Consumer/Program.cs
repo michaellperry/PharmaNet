@@ -19,6 +19,7 @@ namespace PharmaNet.Fulfillment.Consumer
             {
                 CustomerName = "Sherlock Holmes",
                 CustomerAddress = "121B Baker Street",
+                OrderDate = DateTime.Today,
                 Lines = new List<Line>
                 {
                     new Line

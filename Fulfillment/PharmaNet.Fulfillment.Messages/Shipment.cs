@@ -8,7 +8,7 @@ namespace PharmaNet.Fulfillment.Messages
     public class Shipment
     {
         public string TrackingNumber { get; set; }
-        public int ProductId { get; set; }
+        public int ProductNumber { get; set; }
         public int Quantity { get; set; }
     }
 }

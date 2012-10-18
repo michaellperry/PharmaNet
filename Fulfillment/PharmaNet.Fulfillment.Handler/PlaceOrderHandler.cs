@@ -80,12 +80,13 @@ namespace PharmaNet.Fulfillment.Handler
             var orderShippedEvent = new OrderShipped
             {
                 OrderId = message.OrderId,
+                OrderDate = message.OrderDate,
                 CustomerName = message.CustomerName,
                 CustomerAddress = message.CustomerAddress,
                 Shipments = pickLists
                     .Select(p => new Shipment
                     {
-                        ProductId = p.Product.ProductId,
+                        ProductNumber = p.Product.ProductNumber,
                         Quantity = p.Quantity,
                         TrackingNumber = "123-45"
                     })

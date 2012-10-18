@@ -7,6 +7,7 @@ namespace PharmaNet.Sales.Domain
 {
     public class MeasurementPeriod
     {
-        public DateTime StartDate { get; set; }
+        public virtual int Id { get; set; }
+        public virtual DateTime StartDate { get; set; }
     }
 }

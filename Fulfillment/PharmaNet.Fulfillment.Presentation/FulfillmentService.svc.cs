@@ -46,6 +46,7 @@ namespace PharmaNet.Fulfillment.Presentation
             _messageQueue.Send(new Messages.PlaceOrder
             {
                 OrderId = order.OrderId,
+                OrderDate = order.OrderDate,
                 CustomerName = order.CustomerName,
                 CustomerAddress = order.CustomerAddress,
                 Lines = order.Lines.Select(l =>

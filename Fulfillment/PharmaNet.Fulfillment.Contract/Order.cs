@@ -11,6 +11,9 @@ namespace PharmaNet.Fulfillment.Contract
         public Guid OrderId { get; set; }
 
         [DataMember]
+        public DateTime OrderDate { get; set; }
+
+        [DataMember]
         public string CustomerName { get; set; }
 
         [DataMember]
