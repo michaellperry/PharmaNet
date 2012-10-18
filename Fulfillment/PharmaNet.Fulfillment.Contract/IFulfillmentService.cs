@@ -8,7 +8,7 @@ namespace PharmaNet.Fulfillment.Contract
     {
         [OperationContract]
         [FaultContract(typeof(FulfillmentNetworkError))]
-        void PlaceOrder(Order composite);
+        void PlaceOrder(Order order);
 
         [OperationContract]
         [FaultContract(typeof(FulfillmentNetworkError))]
