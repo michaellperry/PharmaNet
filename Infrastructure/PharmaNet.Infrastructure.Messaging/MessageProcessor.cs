@@ -3,7 +3,7 @@ using System.Threading;
 using System.Transactions;
 using PharmaNet.Infrastructure.Messaging;
 
-namespace PharmaNet.Fulfillment.Handler
+namespace PharmaNet.Infrastructure.Messaging
 {
     public class MessageProcessor<T>
     {
@@ -18,7 +18,8 @@ namespace PharmaNet.Fulfillment.Handler
         {
             _factory = factory;
             _messageQueue =
-                new MsmqMessageQueueInbound<T>();
+                new MsmqMessageQueueInbound<T>(
+                    typeof(T).FullName);
 
             _thread = new Thread(ThreadProc);
             _thread.Name = GetType().FullName;
@@ -26,8 +27,7 @@ namespace PharmaNet.Fulfillment.Handler
 
         public void Start()
         {
-            if (_thread.ThreadState ==
-                System.Threading.ThreadState.Unstarted)
+            if (_thread.ThreadState == ThreadState.Unstarted)
             {
                 _thread.Start();
             }
@@ -59,7 +59,6 @@ namespace PharmaNet.Fulfillment.Handler
                             using (IMessageHandler<T> handler =
                                 _factory())
                             {
-                                Console.WriteLine("Handle message.");
                                 handler.HandleMessage(message);
                             }
 
@@ -70,7 +69,6 @@ namespace PharmaNet.Fulfillment.Handler
                 catch (Exception ex)
                 {
                     // Retry.
-                    Console.WriteLine("Retry.");
                 }
             }
         }

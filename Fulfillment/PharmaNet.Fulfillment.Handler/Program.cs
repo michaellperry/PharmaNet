@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using PharmaNet.Fulfillment.SQL;
 using PharmaNet.Fulfillment.Messages;
+using PharmaNet.Infrastructure.Messaging;
 
 namespace PharmaNet.Fulfillment.Handler
 {

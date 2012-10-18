@@ -37,9 +37,9 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="PharmaNet.Infrastructure.Messaging, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="PharmaNet.Infrastructure.Messaging, Version=1.0.3.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PharmaNet.Infrastructure.Messaging.1.0.2\lib\net40\PharmaNet.Infrastructure.Messaging.dll</HintPath>
+      <HintPath>..\packages\PharmaNet.Infrastructure.Messaging.1.0.3\lib\net40\PharmaNet.Infrastructure.Messaging.dll</HintPath>
     </Reference>
     <Reference Include="PharmaNet.Infrastructure.Repository">
       <HintPath>..\packages\PharmaNet.Infrastructure.Repository.1.0.3\lib\net40\PharmaNet.Infrastructure.Repository.dll</HintPath>
@@ -59,8 +59,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IMessageHandler.cs" />
-    <Compile Include="MessageProcessor.cs" />
     <Compile Include="PlaceOrderHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

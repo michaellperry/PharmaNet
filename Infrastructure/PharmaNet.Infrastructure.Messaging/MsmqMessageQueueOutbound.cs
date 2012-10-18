@@ -13,10 +13,10 @@ namespace PharmaNet.Infrastructure.Messaging
 
         private string _path;
 
-        public MsmqMessageQueueOutbound(string target)
+        public MsmqMessageQueueOutbound(
+            string target, string queueName)
         {
-            _path = target + @"\private$\" +
-                typeof(T).FullName;
+            _path = target + @"\private$\" + queueName;
         }
 
         public void Send(T message)

@@ -15,10 +15,9 @@ namespace PharmaNet.Infrastructure.Messaging
 
         private string _path;
 
-        public MsmqMessageQueueInbound()
+        public MsmqMessageQueueInbound(string queueName)
         {
-            _path = @".\private$\" +
-                typeof(T).FullName;
+            _path = @".\private$\" + queueName;
             if (!MessageQueue.Exists(_path))
             {
                 MessageQueue.Create(_path,

@@ -34,6 +34,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PharmaNet.Infrastructure.Messaging", "PharmaNet.Infrastructure.Messaging\PharmaNet.Infrastructure.Messaging.csproj", "{40576B96-05E1-4B62-9D3D-4A85BE57E79F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Messaging", "Messaging", "{0AC8000B-1A5F-4F67-8B4D-440E6BC8ACF2}"
+	ProjectSection(SolutionItems) = preProject
+		Package\Messaging\PharmaNet.Infrastructure.Messaging.nuspec = Package\Messaging\PharmaNet.Infrastructure.Messaging.nuspec
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

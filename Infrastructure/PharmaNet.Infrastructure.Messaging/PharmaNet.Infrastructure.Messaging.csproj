@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IMessageHandler.cs" />
+    <Compile Include="MessageProcessor.cs" />
     <Compile Include="MsmqMessageQueueOutbound.cs" />
     <Compile Include="IMessageQueueOutbound.cs" />
     <Compile Include="IMessageQueueInbound.cs" />

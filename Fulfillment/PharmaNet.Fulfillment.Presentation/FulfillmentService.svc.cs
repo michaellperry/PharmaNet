@@ -1,13 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel;
 using PharmaNet.Fulfillment.Application;
 using PharmaNet.Fulfillment.Contract;
-using PharmaNet.Fulfillment.Domain;
 using PharmaNet.Fulfillment.SQL;
-using System.Transactions;
-using System.ServiceModel;
-using System.Diagnostics;
 using PharmaNet.Infrastructure.Messaging;
 
 namespace PharmaNet.Fulfillment.Presentation
@@ -40,7 +36,9 @@ namespace PharmaNet.Fulfillment.Presentation
                 context.GetPickListRepository());
 
             _messageQueue = new MsmqMessageQueueOutbound<
-                Messages.PlaceOrder>(".");
+                Messages.PlaceOrder>(
+                    ".",
+                    typeof(Messages.PlaceOrder).FullName);
         }
 
         public void PlaceOrder(Order order)

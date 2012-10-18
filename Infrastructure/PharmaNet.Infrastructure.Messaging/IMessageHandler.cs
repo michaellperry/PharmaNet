@@ -1,6 +1,6 @@
 using System;
 
-namespace PharmaNet.Fulfillment.Handler
+namespace PharmaNet.Infrastructure.Messaging
 {
     public interface IMessageHandler<T> : IDisposable
     {
