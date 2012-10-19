@@ -15,11 +15,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PharmaNet.Sales.Domain.Product">
-    <Position X="6.75" Y="5.25" Width="1.5" />
+    <Position X="6.75" Y="5.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAABAAAAAAAAAAAQAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Rebate" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="PharmaNet.Sales.Domain.Rebate">
     <Position X="6.5" Y="2.25" Width="1.5" />
@@ -29,18 +32,29 @@
     </TypeIdentifier>
   </Class>
   <Class Name="PharmaNet.Sales.Domain.Sale">
-    <Position X="4" Y="5.25" Width="1.75" />
+    <Position X="4" Y="5.5" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAA=</HashCode>
       <FileName>Sale.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Product" />
+    </ShowAsAssociation>
   </Class>
   <Class Name="PharmaNet.Sales.Domain.SalesHistory">
-    <Position X="4" Y="3.75" Width="1.5" />
+    <Position X="4" Y="4" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACABAAAABAAAAAAAAABAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>SalesHistory.cs</FileName>
     </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MeasurementPeriod" />
+      <Property Name="Member" />
+      <Property Name="Rebate" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Sales" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>

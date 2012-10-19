@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using PharmaNet.Fulfillment.Messages;
 using PharmaNet.Infrastructure.Messaging;
 using PharmaNet.Infrastructure.Repository;
 using PharmaNet.Sales.Domain;

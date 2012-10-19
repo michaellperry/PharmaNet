@@ -39,10 +39,6 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
-    <Reference Include="PharmaNet.Fulfillment.Messages, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PharmaNet.Fulfillment.Messages.1.0.1\lib\net40\PharmaNet.Fulfillment.Messages.dll</HintPath>
-    </Reference>
     <Reference Include="PharmaNet.Infrastructure.Messaging, Version=1.0.4.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\PharmaNet.Infrastructure.Messaging.1.0.4\lib\net40\PharmaNet.Infrastructure.Messaging.dll</HintPath>
