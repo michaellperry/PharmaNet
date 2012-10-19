@@ -20,7 +20,9 @@ namespace PharmaNet.Fulfillment.Handler
 
         private Random _databaseError = new Random();
 
-        public PlaceOrderHandler()
+        private List<IMessageQueueOutbound<OrderShipped>> _subscribers;
+
+        public PlaceOrderHandler(List<IMessageQueueOutbound<OrderShipped>> subscribers)
         {
             _context = new FulfillmentDB();
 
@@ -32,6 +34,8 @@ namespace PharmaNet.Fulfillment.Handler
                 _context.GetWarehouseRepository());
             _pickListService = new PickListService(
                 _context.GetPickListRepository());
+
+            _subscribers = subscribers;
         }
 
         public void HandleMessage(PlaceOrder message)
@@ -72,21 +76,25 @@ namespace PharmaNet.Fulfillment.Handler
 
             _pickListService.SavePickLists(pickLists);
 
-            //var orderShippedEvent = new OrderShipped
-            //{
-            //    OrderId = message.OrderId,
-            //    OrderDate = message.OrderDate,
-            //    CustomerName = message.CustomerName,
-            //    CustomerAddress = message.CustomerAddress,
-            //    Shipments = pickLists
-            //        .Select(p => new Shipment
-            //        {
-            //            ProductNumber = p.Product.ProductNumber,
-            //            Quantity = p.Quantity,
-            //            TrackingNumber = "123-45"
-            //        })
-            //        .ToList()
-            //};
+            var orderShippedEvent = new OrderShipped
+            {
+                OrderId = message.OrderId,
+                OrderDate = message.OrderDate,
+                CustomerName = message.CustomerName,
+                CustomerAddress = message.CustomerAddress,
+                Shipments = pickLists
+                    .Select(p => new Shipment
+                    {
+                        ProductNumber = p.Product.ProductNumber,
+                        Quantity = p.Quantity,
+                        TrackingNumber = "123-45"
+                    })
+                    .ToList()
+            };
+            foreach (var subscriber in _subscribers)
+            {
+                subscriber.Send(orderShippedEvent);
+            }
         }
 
         public void Dispose()

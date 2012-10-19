@@ -7,6 +7,7 @@ using PharmaNet.Infrastructure.Repository;
 using PharmaNet.Sales.Domain;
 using PharmaNet.Sales.Application;
 using PharmaNet.Sales.SQL;
+using PharmaNet.Fulfillment.Messages;
 
 namespace PharmaNet.Sales.Subscriber
 {
