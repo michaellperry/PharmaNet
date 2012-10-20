@@ -20,26 +20,20 @@ namespace PharmaNet.Fulfillment.Handler
 
             Console.WriteLine("Starting order processor...");
 
-            var subscriberRegistry =
+            SubscriberRegistry<OrderShipped> subscrptionRegistry =
                 new SubscriberRegistry<OrderShipped>();
-            //List<IMessageQueueOutbound<OrderShipped>> subscribers =
-            //    new List<IMessageQueueOutbound<OrderShipped>>
-            //    {
-            //        new MsmqMessageQueueOutbound<OrderShipped>(
-            //            ".",
-            //            "PharmaNet.Sales.Subscriber.OrderShippedSubscriber")
-            //    };
 
             MessageProcessor<PlaceOrder> orderProcessor =
                 new MessageProcessor<PlaceOrder>(
                     typeof(PlaceOrder).FullName,
-                    () => new PlaceOrderHandler(subscriberRegistry));
+                    () => new PlaceOrderHandler(subscrptionRegistry));
             orderProcessor.Start();
 
             MessageProcessor<Subscription> subscriptionProcessor =
                 new MessageProcessor<Subscription>(
                     typeof(OrderShipped).FullName,
-                    () => new SubscriptionHandler<OrderShipped>(subscriberRegistry));
+                    () => new SubscriptionHandler<OrderShipped>(
+                        subscrptionRegistry));
             subscriptionProcessor.Start();
 
             Console.ReadKey();

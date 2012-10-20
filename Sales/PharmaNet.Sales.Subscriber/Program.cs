@@ -21,7 +21,7 @@ namespace PharmaNet.Sales.Subscriber
                 EnsureProduct(rebate, context.GetProductRepository());
             }
 
-            Console.WriteLine("Subscribing to order shipped events...");
+            Console.WriteLine("Subscribing to events...");
 
             var queue = new MsmqMessageQueueOutbound<Subscription>(
                 ".",
