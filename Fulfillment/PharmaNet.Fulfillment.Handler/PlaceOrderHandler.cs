@@ -20,9 +20,10 @@ namespace PharmaNet.Fulfillment.Handler
 
         private Random _databaseError = new Random();
 
-        private List<IMessageQueueOutbound<OrderShipped>> _subscribers;
+        //private List<IMessageQueueOutbound<OrderShipped>> _subscribers;
+        private SubscriberRegistry<OrderShipped> _subscriberRegistry;
 
-        public PlaceOrderHandler(List<IMessageQueueOutbound<OrderShipped>> subscribers)
+        public PlaceOrderHandler(SubscriberRegistry<OrderShipped> subscriberRegistry)
         {
             _context = new FulfillmentDB();
 
@@ -35,7 +36,7 @@ namespace PharmaNet.Fulfillment.Handler
             _pickListService = new PickListService(
                 _context.GetPickListRepository());
 
-            _subscribers = subscribers;
+            _subscriberRegistry = subscriberRegistry;
         }
 
         public void HandleMessage(PlaceOrder message)
@@ -91,10 +92,7 @@ namespace PharmaNet.Fulfillment.Handler
                     })
                     .ToList()
             };
-            foreach (var subscriber in _subscribers)
-            {
-                subscriber.Send(orderShippedEvent);
-            }
+            _subscriberRegistry.Publish(orderShippedEvent);
         }
 
         public void Dispose()

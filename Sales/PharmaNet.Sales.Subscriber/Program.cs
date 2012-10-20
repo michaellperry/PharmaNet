@@ -21,6 +21,17 @@ namespace PharmaNet.Sales.Subscriber
                 EnsureProduct(rebate, context.GetProductRepository());
             }
 
+            Console.WriteLine("Subscribing to order shipped events...");
+
+            var queue = new MsmqMessageQueueOutbound<Subscription>(
+                ".",
+                typeof(OrderShipped).FullName);
+            queue.Send(new Subscription
+            {
+                Target = Environment.MachineName,
+                QueueName = typeof(OrderShippedSubscriber).FullName
+            });
+
             Console.WriteLine("Starting order shipped subscriber...");
 
             MessageProcessor<OrderShipped> processor =
