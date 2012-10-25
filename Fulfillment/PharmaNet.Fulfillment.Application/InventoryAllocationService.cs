@@ -37,7 +37,12 @@ namespace PharmaNet.Fulfillment.Application
                         warehouse);
                     pickLists.Add(picklist);
                 }
+                else
+                {
+                    orderLine.OutOfStocks.Add(new OutOfStock());
+                }
             }
+            _warehouseRepository.SaveChanges();
             return pickLists;
         }
 
@@ -45,11 +50,22 @@ namespace PharmaNet.Fulfillment.Application
             Product product,
             int quantity)
         {
-            return _warehouseRepository.GetAll()
-                .Where(warehouse => warehouse.Inventory
-                    .Any(i =>
-                        i.ProductId == product.ProductId &&
-                        i.QuantityOnHand >= quantity))
+            var inventory = _warehouseRepository.GetAll()
+                .Select(w => new
+                {
+                    Warehouse = w,
+                    QuantityOnHand =
+                        (w.Requisitions
+                            .Where(r => r.Product.Id == product.Id)
+                            .Where(r => r.Restocks.Any())
+                            .Sum(r => (int?)r.Quantity) ?? 0) -
+                        (w.PickLists
+                            .Where(p => p.Product.Id == product.Id)
+                            .Sum(p => (int?)p.Quantity) ?? 0)
+                });
+            return inventory
+                .Where(q => q.QuantityOnHand >= quantity)
+                .Select(q => q.Warehouse)
                 .FirstOrDefault();
         }
 
@@ -59,21 +75,15 @@ namespace PharmaNet.Fulfillment.Application
             int quantity,
             Warehouse warehouse)
         {
-            var inventory = warehouse.Inventory
-                .Single(i =>
-                    i.ProductId == product.ProductId);
-
-            inventory.QuantityOnHand =
-                inventory.QuantityOnHand - quantity;
-            _warehouseRepository.SaveChanges();
-
-            return new PickList
+            PickList pickList = new PickList
             {
                 OrderId = orderId,
                 Product = product,
                 Quantity = quantity,
                 Warehouse = warehouse
             };
+            warehouse.PickLists.Add(pickList);
+            return pickList;
         }
     }
 }

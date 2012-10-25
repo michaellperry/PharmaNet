@@ -48,11 +48,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customer.cs" />
-    <Compile Include="Inventory.cs" />
     <Compile Include="OrderLine.cs" />
+    <Compile Include="OutOfStock.cs" />
     <Compile Include="PickList.cs" />
     <Compile Include="Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Requisition.cs" />
+    <Compile Include="Restock.cs" />
+    <Compile Include="Shipment.cs" />
     <Compile Include="Warehouse.cs" />
   </ItemGroup>
   <ItemGroup>

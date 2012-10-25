@@ -67,9 +67,14 @@ namespace PharmaNet.Fulfillment.Handler
             if (warehouse == null)
             {
                 warehouse = new Domain.Warehouse { Name = "Hangar 18" };
-                warehouse.Inventory = new List<Domain.Inventory>
+                warehouse.Requisitions = new List<Domain.Requisition>()
                 {
-                    new Domain.Inventory { Product = product, QuantityOnHand = 1000000 }
+                    new Domain.Requisition
+                    {
+                        Product = product,
+                        Quantity = 50,
+                        Restocks = new List<Domain.Restock> { new Domain.Restock() }
+                    }
                 };
                 warehouses.Add(warehouse);
                 warehouses.SaveChanges();

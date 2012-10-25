@@ -84,7 +84,7 @@ namespace PharmaNet.Fulfillment.Handler
                 CustomerName = message.CustomerName,
                 CustomerAddress = message.CustomerAddress,
                 Shipments = pickLists
-                    .Select(p => new Shipment
+                    .Select(p => new Messages.Shipment
                     {
                         ProductNumber = p.Product.ProductNumber,
                         Quantity = p.Quantity,

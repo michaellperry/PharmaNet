@@ -78,7 +78,7 @@ namespace PharmaNet.Fulfillment.Presentation
                     .Select(pickList => new Shipment
                     {
                         ProductId = pickList.Product
-                            .ProductId,
+                            .Id,
                         Quantity = pickList.Quantity,
                         TrackingNumber = "123-456"
                     })

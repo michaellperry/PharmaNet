@@ -10,51 +10,84 @@
   <Class Name="PharmaNet.Fulfillment.Domain.OrderLine">
     <Position X="1.75" Y="2.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAECAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAA=</HashCode>
+      <HashCode>AAECAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQgAAAAAA=</HashCode>
       <FileName>OrderLine.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Customer" />
       <Property Name="Product" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="OutOfStocks" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PharmaNet.Fulfillment.Domain.PickList">
-    <Position X="5.5" Y="2.5" Width="1.5" />
+    <Position X="5.75" Y="0.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>EAACAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAIgAAAAAA=</HashCode>
+      <HashCode>EAACAAAAAAAAABAAAAAAAAAAAAAAAAAACAAAgAAAAAA=</HashCode>
       <FileName>PickList.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
       <Property Name="Warehouse" />
       <Property Name="Product" />
     </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Shipments" />
+    </ShowAsCollectionAssociation>
   </Class>
   <Class Name="PharmaNet.Fulfillment.Domain.Product">
     <Position X="3" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>EAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
       <FileName>Product.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="PharmaNet.Fulfillment.Domain.Warehouse">
-    <Position X="8.25" Y="0.5" Width="1.5" />
+    <Position X="9" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAACAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAgAAAAA=</HashCode>
+      <HashCode>AAACAAAAAAAAAAAAAIAAAAQAAAAIAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Warehouse.cs</FileName>
     </TypeIdentifier>
-    <ShowAsCollectionAssociation>
-      <Property Name="Inventory" />
-    </ShowAsCollectionAssociation>
   </Class>
-  <Class Name="PharmaNet.Fulfillment.Domain.Inventory">
-    <Position X="5.5" Y="0.5" Width="1.5" />
+  <Class Name="PharmaNet.Fulfillment.Domain.Shipment">
+    <Position X="5.75" Y="2.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>EAACAAAABAAAAAAAAAAAAAAAAAAAAAAgCAAAAAAAAAA=</HashCode>
-      <FileName>Inventory.cs</FileName>
+      <HashCode>AAACAAAAAAAAAAAAAICAAAEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Shipment.cs</FileName>
     </TypeIdentifier>
     <ShowAsAssociation>
-      <Property Name="Warehouse" />
+      <Property Name="PickList" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PharmaNet.Fulfillment.Domain.Requisition">
+    <Position X="5.75" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAQAAAAAAAAAAAAAAAAAAAAAAAACAAAgAAAAAA=</HashCode>
+      <FileName>Requisition.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
       <Property Name="Product" />
+      <Property Name="Warehouse" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PharmaNet.Fulfillment.Domain.Restock">
+    <Position X="5.75" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Restock.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Requisition" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="PharmaNet.Fulfillment.Domain.OutOfStock">
+    <Position X="1.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>OutOfStock.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="OrderLine" />
     </ShowAsAssociation>
   </Class>
   <Font Name="Segoe UI" Size="9" />

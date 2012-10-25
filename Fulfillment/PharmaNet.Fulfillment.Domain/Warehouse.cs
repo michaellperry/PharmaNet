@@ -6,6 +6,7 @@ namespace PharmaNet.Fulfillment.Domain
     {
         public virtual int Id { get; set; }
         public virtual string Name { get; set; }
-        public virtual IList<Inventory> Inventory { get; set; }
+        public virtual IList<PickList> PickLists { get; set; }
+        public virtual IList<Requisition> Requisitions { get; set; }
     }
 }

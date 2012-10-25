@@ -23,14 +23,16 @@ namespace PharmaNet.Fulfillment.Test
         {
             _warehouses = new FakeRepository<Warehouse>();
             _warehouse1 = new Warehouse { Name = "Hanger 18" };
-            _procrit = new Product { ProductId = 11190 };
+            _procrit = new Product { Id = 11190 };
 
-            _warehouse1.Inventory = new List<Inventory>();
-            _warehouse1.Inventory.Add(new Inventory
+            _warehouse1.Requisitions = new List<Requisition>();
+            _warehouse1.Requisitions.Add(new Requisition
             {
                 Product = _procrit,
-                QuantityOnHand = 7
+                Quantity = 7,
+                Restocks = new List<Restock> { new Restock() }
             });
+            _warehouse1.PickLists = new List<PickList>();
             _warehouses.Add(_warehouse1);
 
             _clinic = new Customer
@@ -58,7 +60,7 @@ namespace PharmaNet.Fulfillment.Test
                 });
 
             Assert.AreEqual(1, pickLists.Count);
-            Assert.AreEqual(11190, pickLists[0].Product.ProductId);
+            Assert.AreEqual(11190, pickLists[0].Product.Id);
             Assert.AreEqual(3, pickLists[0].Quantity);
         }
 
@@ -95,10 +97,19 @@ namespace PharmaNet.Fulfillment.Test
                     }
                 });
 
-            Assert.AreEqual(4, _warehouse1.Inventory
-                .Where(i => i.Product == _procrit)
-                .Select(i => i.QuantityOnHand)
-                .FirstOrDefault());
+            var warehouse = _warehouse1;
+            var product = _procrit;
+            int quantity =
+                warehouse
+                    .Requisitions
+                    .Where(r => r.Product == product)
+                    .Where(r => r.Restocks.Any())
+                    .Sum(r => r.Quantity) -
+                warehouse
+                    .PickLists
+                    .Where(p => p.Product == product)
+                    .Sum(p => p.Quantity);
+            Assert.AreEqual(4, quantity);
         }
     }
 }
