@@ -68,13 +68,6 @@ namespace PharmaNet.Fulfillment.Handler
                         message.OrderId,
                         orderLines);
 
-            if (_databaseError.Next(100) < 20)
-            {
-                throw new ApplicationException(
-                    "Database error.");
-                Console.WriteLine("Database error: retry.");
-            }
-
             _pickListService.SavePickLists(pickLists);
 
             var orderShippedEvent = new OrderShipped

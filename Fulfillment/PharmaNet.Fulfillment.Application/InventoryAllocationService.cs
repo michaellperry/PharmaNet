@@ -39,6 +39,8 @@ namespace PharmaNet.Fulfillment.Application
                 }
                 else
                 {
+                    if (orderLine.OutOfStocks == null)
+                        orderLine.OutOfStocks = new List<OutOfStock>();
                     orderLine.OutOfStocks.Add(new OutOfStock());
                 }
             }
@@ -54,17 +56,16 @@ namespace PharmaNet.Fulfillment.Application
                 .Select(w => new
                 {
                     Warehouse = w,
-                    QuantityOnHand =
-                        (w.Requisitions
-                            .Where(r => r.Product.Id == product.Id)
-                            .Where(r => r.Restocks.Any())
-                            .Sum(r => (int?)r.Quantity) ?? 0) -
-                        (w.PickLists
-                            .Where(p => p.Product.Id == product.Id)
-                            .Sum(p => (int?)p.Quantity) ?? 0)
+                    QuantityAllocated = (int ?)w.PickLists
+                        .Where(p => p.Product.Id == product.Id)
+                        .Sum(p => p.Quantity) ?? 0,
+                    QuantityRestocked = (int ?)w.Requisitions
+                        .Where(r => r.Product.Id == product.Id)
+                        .Where(r => r.Restocks.Any())
+                        .Sum(r => r.Quantity) ?? 0
                 });
             return inventory
-                .Where(q => q.QuantityOnHand >= quantity)
+                .Where(q => q.QuantityRestocked - q.QuantityAllocated >= quantity)
                 .Select(q => q.Warehouse)
                 .FirstOrDefault();
         }
