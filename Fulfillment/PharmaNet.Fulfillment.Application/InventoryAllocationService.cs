@@ -45,11 +45,23 @@ namespace PharmaNet.Fulfillment.Application
             Product product,
             int quantity)
         {
-            return _warehouseRepository.GetAll()
-                .Where(warehouse => warehouse.Inventory
-                    .Any(i =>
-                        i.ProductId == product.ProductId &&
-                        i.QuantityOnHand >= quantity))
+            var inventoryLevels =
+                from warehouse in _warehouseRepository.GetAll()
+                select new
+                {
+                    Warehouse = warehouse,
+                    QuantityAllocated = (int ?)warehouse.PickLists
+                        .Where(p => p.Product.Id == product.Id)
+                        .Sum(p => p.Quantity) ?? 0,
+                    QuantityRestocked = (int ?)warehouse.Requisitions
+                        .Where(r => r.Product.Id == product.Id)
+                        .Where(r => r.Restocks.Any())
+                        .Sum(r => r.Quantity) ?? 0
+                };
+            return inventoryLevels
+                .Where(l => l.QuantityRestocked - l.QuantityAllocated >=
+                    quantity)
+                .Select(l => l.Warehouse)
                 .FirstOrDefault();
         }
 
@@ -59,14 +71,6 @@ namespace PharmaNet.Fulfillment.Application
             int quantity,
             Warehouse warehouse)
         {
-            var inventory = warehouse.Inventory
-                .Single(i =>
-                    i.ProductId == product.ProductId);
-
-            inventory.QuantityOnHand =
-                inventory.QuantityOnHand - quantity;
-            _warehouseRepository.SaveChanges();
-
             return new PickList
             {
                 OrderId = orderId,
