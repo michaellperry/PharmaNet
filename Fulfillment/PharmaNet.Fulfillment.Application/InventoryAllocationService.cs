@@ -37,14 +37,7 @@ namespace PharmaNet.Fulfillment.Application
                         warehouse);
                     pickLists.Add(picklist);
                 }
-                else
-                {
-                    if (orderLine.OutOfStocks == null)
-                        orderLine.OutOfStocks = new List<OutOfStock>();
-                    orderLine.OutOfStocks.Add(new OutOfStock());
-                }
             }
-            _warehouseRepository.SaveChanges();
             return pickLists;
         }
 
@@ -52,21 +45,11 @@ namespace PharmaNet.Fulfillment.Application
             Product product,
             int quantity)
         {
-            var inventory = _warehouseRepository.GetAll()
-                .Select(w => new
-                {
-                    Warehouse = w,
-                    QuantityAllocated = (int ?)w.PickLists
-                        .Where(p => p.Product.Id == product.Id)
-                        .Sum(p => p.Quantity) ?? 0,
-                    QuantityRestocked = (int ?)w.Requisitions
-                        .Where(r => r.Product.Id == product.Id)
-                        .Where(r => r.Restocks.Any())
-                        .Sum(r => r.Quantity) ?? 0
-                });
-            return inventory
-                .Where(q => q.QuantityRestocked - q.QuantityAllocated >= quantity)
-                .Select(q => q.Warehouse)
+            return _warehouseRepository.GetAll()
+                .Where(warehouse => warehouse.Inventory
+                    .Any(i =>
+                        i.ProductId == product.ProductId &&
+                        i.QuantityOnHand >= quantity))
                 .FirstOrDefault();
         }
 
@@ -76,15 +59,21 @@ namespace PharmaNet.Fulfillment.Application
             int quantity,
             Warehouse warehouse)
         {
-            PickList pickList = new PickList
+            var inventory = warehouse.Inventory
+                .Single(i =>
+                    i.ProductId == product.ProductId);
+
+            inventory.QuantityOnHand =
+                inventory.QuantityOnHand - quantity;
+            _warehouseRepository.SaveChanges();
+
+            return new PickList
             {
                 OrderId = orderId,
                 Product = product,
                 Quantity = quantity,
                 Warehouse = warehouse
             };
-            warehouse.PickLists.Add(pickList);
-            return pickList;
         }
     }
 }
