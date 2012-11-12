@@ -48,7 +48,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Customer.cs" />
-    <Compile Include="Inventory.cs" />
     <Compile Include="OrderLine.cs" />
     <Compile Include="OutOfStock.cs" />
     <Compile Include="PickList.cs" />
