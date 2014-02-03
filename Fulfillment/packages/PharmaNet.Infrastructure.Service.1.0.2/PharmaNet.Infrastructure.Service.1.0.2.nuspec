@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>PharmaNet.Infrastructure.Service</id>
+    <version>1.0.2</version>
+    <authors>Michael L Perry</authors>
+    <owners>Michael L Perry</owners>
+    <projectUrl>http://github.com/michaellperry/PharmaNet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Internal package for PharmaNet developers.</description>
+    <copyright>Copyright 2012 PharmaNet</copyright>
+  </metadata>
+</package>
